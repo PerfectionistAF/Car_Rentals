@@ -1,6 +1,6 @@
 <?php
-#USERNAME: best@test
-#PASSWORD: rest
+#USERNAME: award@test
+#PASSWORD: awardspace
 session_start();
 if(isset($_SESSION["logged"]) and $_SESSION["logged"]){  ##exist and is true
   #$_SESSION["logged"]; ##unset so can't work with or logic
@@ -24,7 +24,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
       if($verify){
         #echo "USER FOUND";
         $_SESSION["logged"]=true; ##FIRST BEFORE LINE 5
-        header("Location: cars.php");
+        if(isset($_SESSION["page"])){
+          $page = $_SESSION["page"];  ##testimonials or team not both session
+        }
+        else{
+          $page = "cars.php"; ##cars session aka regular session
+        }
+        header("Location: " . $page);
         die();
       }
       else{

@@ -3,7 +3,7 @@
 include_once("includes/logged.php");
 #$image = "img/car-rent-1.png"; #set image variable
 $consumption = "0";
-$published = "1";
+#$published = "1";
 #start connection and session such that only 1 car can be inserted at a time
 #enterred only 1 at a time: title/model
 #session_start();
@@ -23,12 +23,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){  #no need for session, #when reloaded
 	
 	try{
 		#automatically set to published and consumption to 0
-		$sql = "INSERT INTO `cars`(`title`, `image`, `description`, `model`, `auto`, `consumption`, `properties`, `price`, `published`) VALUES (?,?,?,?,?,?,?,?,?)";
+		$sql = "INSERT INTO `cars`(`title`, `image`, `description`, `model`, `auto`, `consumption`, `properties`, `price`) VALUES (?,?,?,?,?,?,?,?)";
 		$stmt = $conn->prepare($sql);
-		$stmt->execute([$title, $image_name, $description, $model, $auto, $consumption, $properties, $price, $published]);
+		$stmt->execute([$title, $image_name, $description, $model, $auto, $consumption, $properties, $price]);
 		#echo "CAR INSERTED SUCCESSFULLY";
 		#back to nav page
-		header("Location:nav.php");
+		header("Location:InsertCar.php");#Insert again
 		die();#terminate the current script, this is useful because it speeds up the process since the rest of the script isn't executed
 		##if die() is commented, no difference in working
 	}catch(PDOException $e){
@@ -85,11 +85,13 @@ else{
 				<hr class="my-4" />
 				<div>
 					<label for="image" class="col-md-5 col-form-label">Select Image</label>
-					<input type="file" id="image" name="image" accept="image/*"><?php  #echo $image_name;?>
+					<input type="file" id="image" name="image" accept="image/*"><?php  #echo $image_name;  
+																				##can't be added since it is returned from function?>
 				</div>
 				<hr class="my-4" />
 				<div class="form-group mb-3 row"><label for="insert10" class="col-md-5 col-form-label"></label>
-					<div class="col-md-7"><button class="btn btn-primary btn-lg" type="submit">Insert</button></div>
+					<div class="col-md-7"><button class="btn btn-primary btn-lg" onclick="return confirm('CAR INSERTED SUCCESSFULLY')" type="submit">Insert</button></div>
+					<div class="col-md-7"><button class="btn btn-primary btn-lg" style="background-color:white;" type="submit"><a href="cars.php">BACK</a></button></div>
 				</div>
 			</form>
 		</div>
