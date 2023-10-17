@@ -19,6 +19,7 @@ try{
                 <?php
                     foreach ($stmt->fetchAll() as $result)
                     {
+                        $id = $result["id"];
                         $title = $result["title"];
                         $image = $result["image"];
                         $model = $result["model"];
@@ -51,7 +52,7 @@ try{
                                 <span><?php echo $properties;?></span>
                             </div>
                         </div>
-                        <a class="btn btn-primary px-3" href="">$<?php echo $price;?>/Day</a>
+                        <a class="btn btn-primary px-3" href="./detail.php?id=<?php echo $id ?>">$<?php echo $price;?>/Day</a>
                     </div>
                 </div>
                 

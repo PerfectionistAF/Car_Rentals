@@ -18,14 +18,15 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){  #no need for session, #when reloaded
 	$model= $_POST["model"];
 	$auto= $_POST["auto"];
 	$properties= $_POST["properties"];
+	$cat_id = $_POST["category"];
 	$price= $_POST["price"];
 	include_once("includes/addimage.php");
 	
 	try{
 		#automatically set to published and consumption to 0
-		$sql = "INSERT INTO `cars`(`title`, `image`, `description`, `model`, `auto`, `consumption`, `properties`, `price`) VALUES (?,?,?,?,?,?,?,?)";
+		$sql = "INSERT INTO `cars`(`title`, `image`, `description`, `model`, `auto`, `consumption`, `properties`,`cat_id`, `price`) VALUES (?,?,?,?,?,?,?,?,?)";
 		$stmt = $conn->prepare($sql);
-		$stmt->execute([$title, $image_name, $description, $model, $auto, $consumption, $properties, $price]);
+		$stmt->execute([$title, $image_name, $description, $model, $auto, $consumption, $properties, $cat_id, $price]);
 		#echo "CAR INSERTED SUCCESSFULLY";
 		#back to nav page
 		header("Location:InsertCar.php");#Insert again
@@ -82,6 +83,35 @@ else{
 				<div class="form-group mb-3 row"><label for="properties6" class="col-md-5 col-form-label">Properties</label>
 					<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="properties6" name="properties"></div>
 				</div>
+				
+				<?php
+					#include_once("cat_test.php");
+					#$category = array(getAllOne("categories", "category"));
+					try{
+						include_once("includes/conn.php");
+						$sql2 = "SELECT `categories.category` , `cars.cat_id` FROM `categories` JOIN `cars` ON `categories.category` = `cars.cat_id`";
+						$stmt2 = $conn->prepare($sql2);
+						$stmt2->execute();
+					}catch(PDOException $e){
+						echo "FAILED TO INSERT CAR" . $e->getMessage();
+					}
+					foreach($stmt2->fetchAll() as $row){
+						$oneElement = $row["category"];
+						 
+				?>
+				
+				<hr class="bg-transparent border-0 py-1" />
+				<div class="form-group mb-3 row">
+					<label for="select-option1" class="col-md-5 col-form-label">Category</label>
+					<div class="col-md-7">
+                        <select class="form-select custom-select custom-select-lg" name="category" id="select-option1">
+							<option value="0">Select Category</option>
+							<option value="1"><?php echo $oneElement?></option>
+							<option value="2"><?php echo $oneElement?></option>
+							<option value="3"><?php echo $oneElement?></option>
+						</select></div>
+				</div>
+				<?php }?>
 				<hr class="my-4" />
 				<div>
 					<label for="image" class="col-md-5 col-form-label">Select Image</label>
