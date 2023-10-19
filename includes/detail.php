@@ -20,11 +20,33 @@ try{
             $autoStr = "MANUAL";
                 }
     $properties = $result["properties"];
+    $cat_id = $result["cat_id"];  ##fetch category id of this detail car
+    $id = $result["id"];
     $price = $result["price"];
+    
   }catch(PDOException $e){
-    echo "FAILED:" . $e->getMessage();
+    echo "FAILED TO DISPLAY:" . $e->getMessage();
   }
 }
+#if(isset($_GET["cat_id"])){
+    #$id = $_GET["cat_id"];  ##wrong
+    try{
+        #$sql = "SELECT * FROM `categories` WHERE id= ?";
+        /*** ALSO WORKS
+         * $sql = "SELECT * FROM `categories` WHERE id= $cat_id";
+         * $stmt2->execute();
+        ***/
+        $stmt2 = $conn->prepare("SELECT * FROM `categories` WHERE id= ?");#$sql); #SQL statement template is created and sent to the database. Unspecified labels: parameters:?
+        #Execute a prepared statement with an array of positional values
+        $stmt2->execute([$cat_id]);  #parameter binding where id=? is bound to executed parameter from cars table: cat_id
+        $result2 = $stmt2->fetch();
+        $category = $result2["category"];
+        #fetch that exact category from the executed id once the cat_id is set in the cars table
+    }catch(PDOException $e){
+        echo "FAILED TO INSERT CATEGORY:" . $e->getMessage();
+    }
+#}
+include_once("related.php");
 ?>
 <?php
     if(isset($_GET["id"])){
@@ -36,7 +58,7 @@ try{
                 <div class="col-lg-8 mb-5">
                     <h1 class="display-4 text-uppercase mb-5"><?php echo $title?></h1>
                     <div class="row mx-n2 mb-3">
-                    <img class="img-fluid w-100" src="img/<?php echo $image?>" alt="">
+                    <img class="img-fluid w-100" src="img/<?php echo $image?>" alt="<?php echo $title?>">
                         <!--<div class="col-md-3 col-6 px-2 pb-2">
                             
                         </div>-->
@@ -45,11 +67,21 @@ try{
                     <div class="row pt-2">
                         <div class="col-md-3 col-6 mb-2">
                             <i class="fa fa-car text-primary mr-2"></i>
+                            <span>
+                                <?php #category name
+                                echo "Product ID:" . $cat_id;
+                                echo "<br>";
+                                echo "Category:" . $category;
+                                ?>  
+                            </span>
+                        </div>
+                        <div class="col-md-3 col-6 mb-2">
+                            <i class="fa fa-car text-primary mr-2"></i>
                             <span><?php echo $model?></span>
                         </div>
                         <div class="col-md-3 col-6 mb-2">
                             <i class="fa fa-cogs text-primary mr-2"></i>
-                            <span><?php echo $auto?></span>
+                            <span><?php echo $autoStr?></span>
                         </div>
                         <div class="col-md-3 col-6 mb-2">
                             <i class="fa fa-road text-primary mr-2"></i>
@@ -110,5 +142,60 @@ try{
     <?php
     }
     else{
-        echo "INVALID REQUEST";
+        echo "INVALID CAR CHOSEN: SEE OTHER CARS BELOW";
     }?>
+    
+    <!-- Related Car Start --> 
+    <div class="container-fluid pb-5">                               
+        <div class="container pb-5">
+            <h2 class="mb-4">Related Cars</h2>
+            <div class="owl-carousel related-carousel position-relative" style="padding: 0 30px;">
+                <?php
+                foreach($stmt3->fetchAll() as $row2){
+                    $CATID = $row2["cat_id"]; #fetch all from the cars table regardless of requested id
+                    $ID = $row2["id"];
+                    $TITLE = $row2["title"];
+                    $IMAGE = $row2["image"];
+                    $MODEL = $row2["model"];
+                    $AUTO = $row2["auto"];
+                    if($AUTO){
+                        $AUTOStr = "AUTO";
+                    }
+                    else{
+                        $AUTOStr = "MANUAL";
+                    }
+                    $PROPERTIES = $row2["properties"];
+                    $PRICE = $row2["price"];
+                    
+                    if($CATID == $cat_id and $ID != $id){
+                        ?>
+                <div class="rent-item">
+                    <?php #echo "TAG:" . $ID?>
+                     <img class="img-fluid mb-4" src="img/<?php echo $IMAGE?>" alt="">
+                    <h4 class="text-uppercase mb-4"><?php echo $TITLE?></h4>
+                    <div class="d-flex justify-content-center mb-4">
+                        <div class="px-2">
+                            <i class="fa fa-car text-primary mr-1"></i>
+                            <span><?php echo $MODEL?></span>
+                        </div>
+                        <div class="px-2 border-left border-right">
+                            <i class="fa fa-cogs text-primary mr-1"></i>
+                            <span><?php echo $AUTOStr?></span>
+                        </div>
+                        <div class="px-2">
+                            <i class="fa fa-road text-primary mr-1"></i>
+                            <span><?php echo $PROPERTIES?></span>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary px-3" href="detail.php?id= <?php echo $ID ?>">$<?php echo $PRICE?>/Day</a>
+                </div>
+                <?php
+            }
+            else{
+                continue;
+            }
+            }?>
+            </div>
+        </div>
+    </div>
+    <!-- Related Car End -->

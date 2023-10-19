@@ -2,31 +2,32 @@
 #check admin login
 include_once("includes/logged.php");
 #$image = "img/car-rent-1.png"; #set image variable
+include_once("includes/conn.php"); #connect
 $consumption = "0";
 #$published = "1";
 #start connection and session such that only 1 car can be inserted at a time
 #enterred only 1 at a time: title/model
 #session_start();
 if($_SERVER["REQUEST_METHOD"]=="POST"){  #no need for session, #when reloaded
-	include_once("includes/conn.php"); #connect
-	$title= $_POST["title"]; #start receiving data
+	$category = $_POST["category"];
+	if($category>0){
+		$title= $_POST["title"]; #start receiving data
 	
-	#$_SESSION["title"]=$title;
-	#$_SESSION["model"]=$model;
-
-	$description= $_POST["description"];
-	$model= $_POST["model"];
-	$auto= $_POST["auto"];
-	$properties= $_POST["properties"];
-	$cat_id = $_POST["category"];
-	$price= $_POST["price"];
-	include_once("includes/addimage.php");
+		#$_SESSION["title"]=$title;
+		#$_SESSION["model"]=$model;
 	
+		$description= $_POST["description"];
+		$model= $_POST["model"];
+		$auto= $_POST["auto"];
+		$properties= $_POST["properties"];
+		$price= $_POST["price"];
+		include_once("includes/addimage.php");
+	}
 	try{
 		#automatically set to published and consumption to 0
 		$sql = "INSERT INTO `cars`(`title`, `image`, `description`, `model`, `auto`, `consumption`, `properties`,`cat_id`, `price`) VALUES (?,?,?,?,?,?,?,?,?)";
 		$stmt = $conn->prepare($sql);
-		$stmt->execute([$title, $image_name, $description, $model, $auto, $consumption, $properties, $cat_id, $price]);
+		$stmt->execute([$title, $image_name, $description, $model, $auto, $consumption, $properties, $category, $price]);
 		#echo "CAR INSERTED SUCCESSFULLY";
 		#back to nav page
 		header("Location:InsertCar.php");#Insert again
@@ -36,10 +37,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){  #no need for session, #when reloaded
 		echo "FAILED TO INSERT CAR" . $e->getMessage();
 	}
 }
-/** 
-else{
-	echo "REPEATED REQUEST";
-}*/
+try{
+	$sql = "SELECT * FROM `categories`";
+	$stmt2 = $conn->prepare($sql);
+	$stmt2->execute();
+}catch(PDOException $e){
+	echo "FAILED TO INSERT CAR" . $e->getMessage();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,34 +88,23 @@ else{
 					<div class="col-md-7"><input type="text" class="form-control form-control-lg" id="properties6" name="properties"></div>
 				</div>
 				
-				<?php
-					#include_once("cat_test.php");
-					#$category = array(getAllOne("categories", "category"));
-					try{
-						include_once("includes/conn.php");
-						$sql2 = "SELECT `categories.category` , `cars.cat_id` FROM `categories` JOIN `cars` ON `categories.category` = `cars.cat_id`";
-						$stmt2 = $conn->prepare($sql2);
-						$stmt2->execute();
-					}catch(PDOException $e){
-						echo "FAILED TO INSERT CAR" . $e->getMessage();
-					}
-					foreach($stmt2->fetchAll() as $row){
-						$oneElement = $row["category"];
-						 
-				?>
-				
 				<hr class="bg-transparent border-0 py-1" />
 				<div class="form-group mb-3 row">
 					<label for="select-option1" class="col-md-5 col-form-label">Category</label>
 					<div class="col-md-7">
                         <select class="form-select custom-select custom-select-lg" name="category" id="select-option1">
 							<option value="0">Select Category</option>
-							<option value="1"><?php echo $oneElement?></option>
-							<option value="2"><?php echo $oneElement?></option>
-							<option value="3"><?php echo $oneElement?></option>
-						</select></div>
+							<?php
+							foreach($stmt2->fetchAll() as $row){
+								$cat = $row["category"];
+								$catid = $row["id"];		
+							?>
+							<option value="<?php echo $catid?>"><?php echo $cat?></option>
+							
+							<?php }?>
+						</select>
+					</div>
 				</div>
-				<?php }?>
 				<hr class="my-4" />
 				<div>
 					<label for="image" class="col-md-5 col-form-label">Select Image</label>

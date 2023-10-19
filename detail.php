@@ -59,7 +59,7 @@ try{
         #<!-- Detail --> 
         include_once("includes/detail.php");
         #<!-- Related Car -->
-        include_once("includes/related.php");
+        #include_once("includes/related.php");
         #<!-- Vendor -->
         include_once("includes/vendor.php");
         #<!-- Footer --> #<!-- Back to Top -->

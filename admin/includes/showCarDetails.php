@@ -20,6 +20,7 @@ if($status){
 			$manualStr = "selected";
 		}
 		$properties = $result["properties"];
+		$catid = $result["cat_id"];
 		$price = $result["price"];
 		$published = $result["published"];
 		if($published){
@@ -31,6 +32,14 @@ if($status){
 		
 	}catch(PDOException $e){
 		echo "Connection failed: " . $e->getMessage();
+	}
+
+	try{
+		$sql = "SELECT * FROM `categories`";
+		$stmt2 = $conn->prepare($sql);
+		$stmt2->execute();
+	}catch(PDOException $e){
+		echo "FAILED TO UPDATE CAR" . $e->getMessage();
 	}
 }
 ?>

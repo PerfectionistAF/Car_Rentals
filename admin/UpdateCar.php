@@ -9,50 +9,51 @@
 		}
 
 	if($_SERVER["REQUEST_METHOD"]=="POST"){
-		$title = $_POST["title"];
-		
-		$content = $_POST["content"];
-		$model = $_POST["model"];
-		$auto = $_POST["auto"];
-		$properties = $_POST["properties"];
-		$price = $_POST["price"];
-		if(isset($_POST["publish"])){
-			$published = 1;
-		}
-		else{
-			$published = 0;
-		}
-		$oldImage = $_POST["oldImage"];
-		
-		include_once("includes/updateImage.php");
-		
-		try{
-			#$sql = "SELECT * FROM `cars` WHERE id = ?";
-			$sql = "UPDATE `cars` SET `title`=?, `description`=?, `model`=?, `auto`=?, `properties`=?, `price`=?, `image`=?, `published`=? WHERE id = ?";
-			$stmt = $conn->prepare($sql);
-			$stmt->execute([$title,$content,$model,$auto,$properties,$price,$image_name,$published,$id]);
-			#echo "CAR UPDATED SUCCESSFULLY";
-			/*$title = $result["title"];
-			$image = $result["image"];
-			$content = $result["description"];
-			$model = $result["model"];
-			$auto = $result["auto"];
-			if($auto){
-				$autoStr = "selected";
-				$manualStr = "";
+			$category = $_POST["category"];
+			$title = $_POST["title"];
+			$content = $_POST["content"];
+			$model = $_POST["model"];
+			$auto = $_POST["auto"];
+			$properties = $_POST["properties"];
+			$price = $_POST["price"];
+
+			if(isset($_POST["publish"])){
+				$published = 1;
 			}
 			else{
-				$autoStr = "";
-				$manualStr = "selected";
+				$published = 0;
 			}
-			$properties = $result["properties"];
-			$price = $result["price"];
-			$published = $result["published"];
-			*/
-		}catch(PDOException $e){
-			echo "Connection failed: " . $e->getMessage();
-		}
+			$oldImage = $_POST["oldImage"];
+			
+			include_once("includes/updateImage.php");
+			try{
+				#$sql = "SELECT * FROM `cars` WHERE id = ?";
+				$sql = "UPDATE `cars` SET `title`=?, `description`=?, `model`=?, `auto`=?, `properties`=?, `price`=?, `image`=?, `published`=?, `cat_id`=? WHERE id = ?";
+				$stmt = $conn->prepare($sql);
+				$stmt->execute([$title,$content,$model,$auto,$properties,$price,$image_name,$published,$category, $id]);
+				#echo "CAR UPDATED SUCCESSFULLY";
+				/*$title = $result["title"];
+				$image = $result["image"];
+				$content = $result["description"];
+				$model = $result["model"];
+				$auto = $result["auto"];
+				if($auto){
+					$autoStr = "selected";
+					$manualStr = "";
+				}
+				else{
+					$autoStr = "";
+					$manualStr = "selected";
+				}
+				$properties = $result["properties"];
+				$price = $result["price"];
+				$published = $result["published"];
+				*/
+			}catch(PDOException $e){
+				echo "Connection failed: " . $e->getMessage();
+			}
 	}
+	
 	//show details
 	include_once("includes/showCarDetails.php");
 ?>
@@ -106,6 +107,29 @@
 				<div class="form-group mb-3 row"><label for="properties6" class="col-md-5 col-form-label">Properties</label>
 					<div class="col-md-7">
 						<input type="text" class="form-control form-control-lg" id="properties6" value="<?php echo $properties ?>" name="properties"></div>
+				</div>
+				<hr class="bg-transparent border-0 py-1" />
+				<div class="form-group mb-3 row">
+					<label for="select-option1" class="col-md-5 col-form-label">Category</label>
+					<div class="col-md-7">
+                        <select class="form-select custom-select custom-select-lg" name="category" id="select-option1">
+						<?php
+							foreach($stmt2->fetchAll() as $row){
+								$_cat = $row["category"];
+								$_catid = $row["id"];
+								if($catid == $_catid){	
+									$selected = "selected";
+								}else{
+									$selected="";
+								}	
+							?>
+							<option value="<?php echo $_catid?>" <?php echo $selected?>><?php echo $_cat?></option>
+						
+							<?php 
+								}
+							?>
+						</select>
+					</div>
 				</div>
 				<hr class="my-4" />
 				<div>
