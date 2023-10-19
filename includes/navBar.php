@@ -10,14 +10,14 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="index.html" class="nav-item nav-link active">Home</a>
+                        <a href="./index.php" class="nav-item nav-link active">Home</a>
                         <a href="about.html" class="nav-item nav-link">About</a>
                         <a href="service.html" class="nav-item nav-link">Service</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Cars</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="car.html" class="dropdown-item">Car Listing</a>
-                                <a href="detail.html" class="dropdown-item">Car Detail</a>
+                                <a href="./detail.php" class="dropdown-item">Car Detail</a>
                                 <a href="booking.html" class="dropdown-item">Car Booking</a>
                             </div>
                         </div>

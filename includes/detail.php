@@ -28,28 +28,28 @@ try{
     echo "FAILED TO DISPLAY:" . $e->getMessage();
   }
 }
-#if(isset($_GET["cat_id"])){
-    #$id = $_GET["cat_id"];  ##wrong
-    try{
-        #$sql = "SELECT * FROM `categories` WHERE id= ?";
-        /*** ALSO WORKS
-         * $sql = "SELECT * FROM `categories` WHERE id= $cat_id";
-         * $stmt2->execute();
-        ***/
-        $stmt2 = $conn->prepare("SELECT * FROM `categories` WHERE id= ?");#$sql); #SQL statement template is created and sent to the database. Unspecified labels: parameters:?
-        #Execute a prepared statement with an array of positional values
-        $stmt2->execute([$cat_id]);  #parameter binding where id=? is bound to executed parameter from cars table: cat_id
-        $result2 = $stmt2->fetch();
-        $category = $result2["category"];
-        #fetch that exact category from the executed id once the cat_id is set in the cars table
-    }catch(PDOException $e){
-        echo "FAILED TO INSERT CATEGORY:" . $e->getMessage();
-    }
-#}
-include_once("related.php");
 ?>
 <?php
-    if(isset($_GET["id"])){
+    if(isset($_GET["id"]) and isset($cat_id)){ #each id needs to have a cat_id
+        #if(isset($_GET["cat_id"])){
+        #$id = $_GET["cat_id"];  ##wrong
+        try{
+            $sql = "SELECT * FROM `categories` WHERE id= ?";
+            /*** ALSO WORKS
+             * $sql = "SELECT * FROM `categories` WHERE id= $cat_id";
+             * $stmt2->execute();
+            ***/
+            $stmt2 = $conn->prepare($sql); #SQL statement template is created and sent to the database. Unspecified labels: parameters:?
+            #Execute a prepared statement with an array of positional values
+            $stmt2->execute([$cat_id]);  #parameter binding where id=? is bound to executed parameter from cars table: cat_id
+            $result2 = $stmt2->fetch();
+            $category = $result2["category"];
+            #fetch that exact category from the executed id once the cat_id is set in the cars table
+        }catch(PDOException $e){
+            echo "FAILED TO INSERT CATEGORY:" . $e->getMessage();
+        }
+    #}
+    include_once("related.php");
     ?>
     <!-- Detail Start -->
     <div class="container-fluid pt-5">
@@ -145,7 +145,10 @@ include_once("related.php");
         echo "INVALID CAR CHOSEN: SEE OTHER CARS BELOW";
     }?>
     
-    <!-- Related Car Start --> 
+    <!-- Related Car Start -->
+    <?php
+    if(isset($_GET["id"]) and isset($cat_id)){
+    ?> 
     <div class="container-fluid pb-5">                               
         <div class="container pb-5">
             <h2 class="mb-4">Related Cars</h2>
@@ -154,20 +157,20 @@ include_once("related.php");
                 foreach($stmt3->fetchAll() as $row2){
                     $CATID = $row2["cat_id"]; #fetch all from the cars table regardless of requested id
                     $ID = $row2["id"];
-                    $TITLE = $row2["title"];
-                    $IMAGE = $row2["image"];
-                    $MODEL = $row2["model"];
-                    $AUTO = $row2["auto"];
-                    if($AUTO){
-                        $AUTOStr = "AUTO";
-                    }
-                    else{
-                        $AUTOStr = "MANUAL";
-                    }
-                    $PROPERTIES = $row2["properties"];
-                    $PRICE = $row2["price"];
-                    
+
                     if($CATID == $cat_id and $ID != $id){
+                        $TITLE = $row2["title"];
+                        $IMAGE = $row2["image"];
+                        $MODEL = $row2["model"];
+                        $AUTO = $row2["auto"];
+                        if($AUTO){
+                            $AUTOStr = "AUTO";
+                        }
+                        else{
+                            $AUTOStr = "MANUAL";
+                        }
+                        $PROPERTIES = $row2["properties"];
+                        $PRICE = $row2["price"];
                         ?>
                 <div class="rent-item">
                     <?php #echo "TAG:" . $ID?>
@@ -199,3 +202,9 @@ include_once("related.php");
         </div>
     </div>
     <!-- Related Car End -->
+        <?php
+    }
+    else{
+        echo "<br>";
+        echo "INVALID RELATED CARS";
+    }?>

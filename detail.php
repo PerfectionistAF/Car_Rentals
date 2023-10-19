@@ -56,10 +56,8 @@ try{
         include_once("includes/search.php");
         #<!-- Page Header -->
         include_once("includes/header.php");
-        #<!-- Detail --> 
+        #<!-- Detail --> #<!-- Related Car -->
         include_once("includes/detail.php");
-        #<!-- Related Car -->
-        #include_once("includes/related.php");
         #<!-- Vendor -->
         include_once("includes/vendor.php");
         #<!-- Footer --> #<!-- Back to Top -->
