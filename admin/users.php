@@ -77,7 +77,7 @@ try{
 								<li><a><i class="fa fa-users"></i> Users <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
 										<li><a href="users.php">Users List</a></li>
-										<li><a href="addUser.html">Add User</a></li>
+										<li><a href="addUser.php">Add User</a></li>
 									</ul>
 								</li>
 								<li><a><i class="fa fa-edit"></i> Categories <span class="fa fa-chevron-down"></span></a>
@@ -88,8 +88,8 @@ try{
 								</li>
 								<li><a><i class="fa fa-desktop"></i> Cars <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="addCar.html">Add Car</a></li>
-										<li><a href="cars.html">Cars List</a></li>
+										<li><a href="addCar.php">Add Car</a></li>
+										<li><a href="cars.php">Cars List</a></li>
 									</ul>
 								</li>
 							</ul>

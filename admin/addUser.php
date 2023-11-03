@@ -1,42 +1,26 @@
 <?php
-#session_start();
-##connect
-include_once("./includes/conn.php");
-##try if logged in
-include_once("./includes/logged.php");
-##status in case cannot edit
-$status = false;
-	if(isset($_GET["id"])){
-		$id = $_GET["id"];
-		$status = true;
-		}
+include_once("includes/logged.php");
+include_once("includes/conn.php"); #connect
 
-	if($_SERVER["REQUEST_METHOD"]=="POST"){
-		$fullname = $_POST["fullname"];
-		$username = $_POST["username"];
-		$email = $_POST["email"];
-		
-		if(isset($_POST["active"])){
-		  $active = 1;
-		}
-		else{
-			$active = 0;
-		}
-		##de-encrypt password
-		$pass = $_POST["password"];
-		
-			try{
-				$sql = "UPDATE `users_table` SET `fullname`=?, `username`=?, `email`=?, `active`=?, `password`=? WHERE id = ?";
-				$stmt = $conn->prepare($sql);
-				$stmt->execute([$fullname,$username,$email,$active,$pass,$id]);
-				echo "USER UPDATED SUCCESSFULLY";
-			}catch(PDOException $e){
-				echo "Connection failed: " . $e->getMessage();
-			}
-	}
+if($_SERVER["REQUEST_METHOD"]=="POST"){  
 	
-	//show details
-	include_once("includes/showUserDetails.php");
+	$fullname = $_POST["fullname"];
+	$username = $_POST["username"];
+	$email = $_POST["email"];
+	#$active = $_POST["active"];
+	$passwd = $_POST["password"];
+	
+	try{
+		$sql = "INSERT INTO `users_table`(`fullname`, `username`, `email`, `password`) VALUES (?,?,?,?)";
+		$stmt = $conn->prepare($sql);
+		$stmt->execute([$fullname, $username, $email, $passwd]);
+		echo "USER ADDED SUCCESSFULLY";
+		header("Location:users.php");
+		die();
+	}catch(PDOException $e){
+		echo "FAILED TO INSERT CAR" . $e->getMessage();
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +31,7 @@ $status = false;
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Rent Car Admin | Edit User</title>
+	<title>Rent Car Admin | Add User</title>
 
 	<!-- Bootstrap -->
 	<link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -97,7 +81,6 @@ $status = false;
 
 					<br />
 
-					<!-- sidebar menu -->
 					<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<h3>General</h3>
@@ -116,8 +99,8 @@ $status = false;
 								</li>
 								<li><a><i class="fa fa-desktop"></i> Cars <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="addCar.html">Add Car</a></li>
-										<li><a href="cars.html">Cars List</a></li>
+										<li><a href="addCar.php">Add Car</a></li>
+										<li><a href="cars.php">Cars List</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -155,7 +138,7 @@ $status = false;
 						<ul class=" navbar-right">
 							<li class="nav-item dropdown open" style="padding-left: 15px;">
 								<a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-									<img src="images/img.jpg" alt=""><?php echo $_SESSION["fullname"]?>
+									<img src="images/img.jpg" alt=""><?php $_SESSION["fullname"]?>
 								</a>
 								<div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
 									<a class="dropdown-item" href="javascript:;"> Profile</a>
@@ -262,7 +245,7 @@ $status = false;
 						<div class="col-md-12 col-sm-12 ">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Edit User</h2>
+									<h2>Add User</h2>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 										</li>
@@ -282,32 +265,40 @@ $status = false;
 								</div>
 								<div class="x_content">
 									<br />
-									<form method="POST" action=""  id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
+									<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
+
 										<div class="item form-group">
-											<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Full Name <span class="required">*</span>
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="fullname">Full Name <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="first-name" required="required" class="form-control " value="<?php echo $fullname ?>" name="fullname">
+												<input type="text" id="fullname" name="fullname" required="required" class="form-control ">
 											</div>
 										</div>
 										<div class="item form-group">
-											<label class="col-form-label col-md-3 col-sm-3 label-align" for="user-name">Username <span class="required">*</span>
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="username">Username <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="user-name" value="<?php echo $username ?>" name="username" required="required" class="form-control">
+												<input type="text" id="user-name" name="username" required="required" class="form-control">
 											</div>
 										</div>
 										<div class="item form-group">
 											<label for="email" class="col-form-label col-md-3 col-sm-3 label-align">Email <span class="required">*</span></label>
 											<div class="col-md-6 col-sm-6 ">
-												<input id="email" class="form-control" type="email" name="email" value="<?php echo $email ?>" required="required">
+												<input id="email" class="form-control" type="email" name="email" required="required">
 											</div>
 										</div>
 										<div class="item form-group">
+											<?php
+											/*if($active){
+												$activeBox="checked";
+											}
+											else{
+												$activeBox="";
+											}*/?>
 											<label class="col-form-label col-md-3 col-sm-3 label-align">Active</label>
 											<div class="checkbox">
 												<label>
-													<input type="checkbox" name="active" class="flat" <?php echo $activeBox ?>>
+													<input type="checkbox" class="flat">
 												</label>
 											</div>
 										</div>
@@ -315,14 +306,14 @@ $status = false;
 											<label class="col-form-label col-md-3 col-sm-3 label-align" for="password">Password <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="password" id="password" name="password" value="<?php echo $pass ?>" required="required" class="form-control">
+												<input type="password" id="password" name="password" required="required" class="form-control">
 											</div>
 										</div>
 										<div class="ln_solid"></div>
 										<div class="item form-group">
 											<div class="col-md-6 col-sm-6 offset-md-3">
 												<a href="users.php"><button class="btn btn-primary" type="button">Cancel</button></a>
-												<button type="submit" onclick="return confirm('USER UPDATED SUCCESSFULLY')" class="btn btn-success">Update</button>
+												<button type="submit" onclick="return confirm('USER ADDED SUCCESSFULLY')" class="btn btn-success">Add</button>
 											</div>
 										</div>
 

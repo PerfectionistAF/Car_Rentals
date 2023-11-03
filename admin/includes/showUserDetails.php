@@ -9,7 +9,8 @@ if($status){
 		$fullname = $row["fullname"];
 		$username = $row["username"];
 		$email = $row["email"];
-		if(isset($_POST["active"])){
+		$active = $row["active"];
+		if($active){
 		  $activeBox = "checked";
 		}
 		else{
