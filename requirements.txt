@@ -47,7 +47,8 @@ inside admin
 main website
 --------
 1- inside index.php display latest 6 cars using title, image, price, Luggage, Doors, Passenger and short description max 100 char.
-
+--------DONE 
 2- when we press any car we can display the car details on single.php
-
+--------DONE 
 3- at the right, we should display all categories name from the DB.
+--------DONE 
