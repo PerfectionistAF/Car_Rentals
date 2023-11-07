@@ -277,7 +277,7 @@ try{
                           <td><?php echo $categoryname?></td>
                           <td><a href="editCategory.php?id=<?php echo $id ?>"><img src="./images/edit.png" alt="Edit"></td></a>
                           
-                          <td><a href="delete.php?id=<?php echo $id ?>" onclick="return confirm('Are you sure you want to delete?')"><img src="./images/delete.png" alt="Delete"></td></a>
+                          <td><a href="deleteCategory.php?id=<?php echo $id ?>" onclick="return confirm('Are you sure you want to delete?')"><img src="./images/delete.png" alt="Delete"></td></a>
                         </tr>
                       <?php
                       }?>

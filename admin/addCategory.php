@@ -51,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 	<!-- Custom Theme Style -->
 	<link href="build/css/custom.min.css" rel="stylesheet">
 </head>
-
+<?php if($_SERVER["REQUEST_METHOD"]=="POST"){?>
 <body class="nav-md">
 	<div class="container body">
 		<div class="main_container">
@@ -337,4 +337,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 	<!-- Custom Theme Scripts -->
 	<script src="build/js/custom.min.js"></script>
 
-</body></html>
+</body>
+<?php } 
+else{
+	include_once("includes/404.php");
+}?>
+</html>

@@ -286,7 +286,7 @@ try{
                           <td><?php echo $price?></td>
                           <td><?php echo $activeStr?></td>
                           <td><a href="editCar.php?id=<?php echo $id ?>"><img src="./images/edit.png" alt="Edit"></a></td>
-                          <td><a href="delete.php?id=<?php echo $id ?>"><img src="./images/delete.png" alt="Delete"></a></td>
+                          <td><a href="deleteCar.php?id=<?php echo $id ?>"><img src="./images/delete.png" alt="Delete"></a></td>
                         </tr>
                         <?php
                       }?>
