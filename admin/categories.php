@@ -5,7 +5,7 @@ include_once("./includes/conn.php");
 ##try if logged in
 include_once("./includes/logged.php");
 try{
-  $sql = "SELECT * FROM `cars_table`";
+  $sql = "SELECT * FROM `categories_table`";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute();
 }catch(PDOException $e){
@@ -22,7 +22,7 @@ try{
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Meetings</title>
+    <title>Categories</title>
 
     <!-- Bootstrap -->
     <link href="cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
@@ -216,7 +216,7 @@ try{
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Manage Cars</h3>
+                <h3>Manage Categories</h3>
               </div>
 
               <div class="title_right">
@@ -237,7 +237,7 @@ try{
               <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>List of Cars</h2>
+                    <h2>List of Categories</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -260,36 +260,28 @@ try{
                     <table id="datatable" class="table table-striped table-bordered" style="width:100%">
                       <thead>
                         <tr>
-                          <th>Title</th>
-                          <th>Price</th>
-                          <th>Active</th>
+                          <th>Category Name</th>
                           <th>Edit</th>
                           <th>Delete</th>
                         </tr>
                       </thead>
+
+
                       <tbody>
-                        <?php
+                      <?php
                           foreach($stmt->fetchAll() as $row){
                             $id = $row["id"];
-                            $title = $row["title"];
-                            $price = $row["price"];
-                            $active = $row["active"];
-                            if($active){
-                              $activeStr = "Yes";
-                            }
-                            else{
-                              $activeStr = "No";
-                            }
+                            $categoryname = $row["categoryname"];
                         ?>
                         <tr>
-                          <td><?php echo $title?></td>
-                          <td><?php echo $price?></td>
-                          <td><?php echo $activeStr?></td>
-                          <td><a href="editCar.php?id=<?php echo $id ?>"><img src="./images/edit.png" alt="Edit"></a></td>
-                          <td><a href="delete.php?id=<?php echo $id ?>"><img src="./images/delete.png" alt="Delete"></a></td>
+                          <td><?php echo $categoryname?></td>
+                          <td><a href="editCategory.php?id=<?php echo $id ?>"><img src="./images/edit.png" alt="Edit"></td></a>
+                          
+                          <td><a href="delete.php?id=<?php echo $id ?>" onclick="return confirm('Are you sure you want to delete?')"><img src="./images/delete.png" alt="Delete"></td></a>
                         </tr>
-                        <?php
+                      <?php
                       }?>
+                        
                       </tbody>
                     </table>
                   </div>

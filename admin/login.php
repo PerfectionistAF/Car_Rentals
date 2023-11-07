@@ -63,8 +63,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
           echo $fullname;
           echo "<br>";
           echo "SUCCESSFUL";
-          #header("Location: " . $page);
-          #die();
+          header("Location: ./users.php");
+          die();
         }
         else{
           $_SESSION["logged"] = false;

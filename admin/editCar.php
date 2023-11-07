@@ -1,27 +1,50 @@
 <?php
-include_once("includes/logged.php");
-include_once("includes/conn.php"); #connect
-
-if($_SERVER["REQUEST_METHOD"]=="POST"){  
-	
-	$fullname = $_POST["fullname"];
-	$username = $_POST["username"];
-	$email = $_POST["email"];
-	#$active = $_POST["active"];
-	$passwd = $_POST["password"];
-	
-	try{
-		$sql = "INSERT INTO `users_table`(`fullname`, `username`, `email`, `password`) VALUES (?,?,?,?)";
-		$stmt = $conn->prepare($sql);
-		$stmt->execute([$fullname, $username, $email, $passwd]);
-		echo "USER ADDED SUCCESSFULLY";
-		header("Location:users.php");
-		die();
-	}catch(PDOException $e){
-		echo "FAILED TO INSERT USER" . $e->getMessage();
+#session_start();
+##connect
+include_once("./includes/conn.php");
+##try if logged in
+include_once("./includes/logged.php");
+##status in case cannot edit
+$status = false;
+$again = false;
+	if(isset($_GET["id"])){
+		$id = $_GET["id"];
+		$status = true;
 	}
-}
+	if($_SERVER["REQUEST_METHOD"]=="POST"){
+		$title = $_POST["title"];
+		$content = $_POST["content"];
+		$luggage = $_POST["luggage"];
+		$doors = $_POST["doors"];
+		$passengers = $_POST["passengers"];
+		$price = $_POST["price"];
+		$active = $_POST["active"];
+		if(isset($_POST["active"])){
+			$active = 1;
+		  }
+		  else{
+			  $active = 0;
+		  }
+		$categorytype = $_POST["categorytype"];
+
+		$oldImage = $_POST["oldImage"];
+		
+		include_once("includes/updateImage.php");
+
+			try{
+				$sql = "UPDATE `cars_table` SET `title`=?, `image=?`, `content`=?, `luggage`=?, `doors`=?, `passengers`=?, `price`=?, `image`=?, `active`=?, `categorytype`=? WHERE id = ?";
+				$stmt = $conn->prepare($sql);
+				$stmt->execute([$title, $content, $luggage, $doors, $passengers, $price, $active, $categorytype, $image_name, $id]);
+				echo "CAR UPDATED SUCCESSFULLY";
+			}catch(PDOException $e){
+				echo "Connection failed: " . $e->getMessage();
+			}
+	}
+	
+	//show details
+	include_once("includes/showCarDetails.php");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Rent Car Admin | Add User</title>
+	<title>Rent Car Admin | Edit Car</title>
 
 	<!-- Bootstrap -->
 	<link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -62,7 +85,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-car"></i> <span>Rent Car Admin</span></a>
+						<a href="index.php" class="site_title"><i class="fa fa-car"></i> <span>Rent Car Admin</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -81,6 +104,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 					<br />
 
+					<!-- sidebar menu -->
 					<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<h3>General</h3>
@@ -93,8 +117,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 								</li>
 								<li><a><i class="fa fa-edit"></i> Categories <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="addCategory.html">Add Category</a></li>
-										<li><a href="categories.html">Categories List</a></li>
+										<li><a href="addCategory.php">Add Category</a></li>
+										<li><a href="categories.php">Categories List</a></li>
 									</ul>
 								</li>
 								<li><a><i class="fa fa-desktop"></i> Cars <span class="fa fa-chevron-down"></span></a>
@@ -138,7 +162,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 						<ul class=" navbar-right">
 							<li class="nav-item dropdown open" style="padding-left: 15px;">
 								<a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-									<img src="images/img.jpg" alt=""><?php $_SESSION["fullname"]?>
+									<img src="images/img.jpg" alt=""><?php echo $_SESSION["fullname"]?>
 								</a>
 								<div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
 									<a class="dropdown-item" href="javascript:;"> Profile</a>
@@ -226,7 +250,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>Manage Users</h3>
+							<h3>Manage Cars</h3>
 						</div>
 
 						<div class="title_right">
@@ -245,7 +269,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 						<div class="col-md-12 col-sm-12 ">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Add User</h2>
+									<h2>Edit Car</h2>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 										</li>
@@ -265,55 +289,80 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 								</div>
 								<div class="x_content">
 									<br />
-									<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
-
+									<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 										<div class="item form-group">
-											<label class="col-form-label col-md-3 col-sm-3 label-align" for="fullname">Full Name <span class="required">*</span>
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="title">Title <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="fullname" name="fullname" required="required" class="form-control ">
+												<input type="text" id="title" name="title" required="required" class="form-control" value="<?php echo $title?>">
 											</div>
 										</div>
 										<div class="item form-group">
-											<label class="col-form-label col-md-3 col-sm-3 label-align" for="username">Username <span class="required">*</span>
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="content">Content <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="user-name" name="username" required="required" class="form-control">
+												<textarea id="content" name="content" required="required" class="form-control" value="<?php echo $content?>">Contents</textarea>
 											</div>
 										</div>
 										<div class="item form-group">
-											<label for="email" class="col-form-label col-md-3 col-sm-3 label-align">Email <span class="required">*</span></label>
+											<label for="luggage" class="col-form-label col-md-3 col-sm-3 label-align">Luggage <span class="required">*</span></label>
 											<div class="col-md-6 col-sm-6 ">
-												<input id="email" class="form-control" type="email" name="email" required="required">
+												<input id="luggage" class="form-control" type="number" name="luggage" required="required" value="<?php echo $luggage?>">
 											</div>
 										</div>
 										<div class="item form-group">
-											<?php
-											/*if($active){
-												$activeBox="checked";
-											}
-											else{
-												$activeBox="";
-											}*/?>
+											<label for="doors" class="col-form-label col-md-3 col-sm-3 label-align">Doors <span class="required">*</span></label>
+											<div class="col-md-6 col-sm-6 ">
+												<input id="doors" class="form-control" type="number" name="doors" required="required" value="<?php echo $doors?>">
+											</div>
+										</div>
+										<div class="item form-group">
+											<label for="passengers" class="col-form-label col-md-3 col-sm-3 label-align">Passengers <span class="required">*</span></label>
+											<div class="col-md-6 col-sm-6 ">
+												<input id="passengers" class="form-control" type="number" name="passengers" required="required" value="<?php echo $passengers?>">
+											</div>
+										</div>
+										<div class="item form-group">
+											<label for="price" class="col-form-label col-md-3 col-sm-3 label-align">Price <span class="required">*</span></label>
+											<div class="col-md-6 col-sm-6 ">
+												<input id="price" class="form-control" type="number" name="price" required="required" value="<?php echo $price?>">
+											</div>
+										</div>
+										<div class="item form-group">
 											<label class="col-form-label col-md-3 col-sm-3 label-align">Active</label>
 											<div class="checkbox">
 												<label>
-													<input type="checkbox" class="flat">
+													<input type="checkbox" class="flat" <?php echo $activeBox?>>
 												</label>
 											</div>
 										</div>
 										<div class="item form-group">
-											<label class="col-form-label col-md-3 col-sm-3 label-align" for="password">Password <span class="required">*</span>
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="image">Image <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="password" id="password" name="password" required="required" class="form-control">
+												<input type="file" id="image" name="image"  class="form-control"><!--required="required"-->
+												<img src="../images/<?php echo $image?>" alt="" style="width: 300px;">
+											</div>
+										</div>
+
+										<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="title">Category <span class="required">*</span>
+											</label>
+											<div class="col-md-6 col-sm-6 ">
+												<select class="form-control" name="categorytype" id="">
+													<option value=" ">Select Category</option>
+													<option value="0" <?php echo $sedanStr ?>>sedan</option>
+													<option value="1" <?php echo $crossoverStr ?>>crossover</option>
+												</select>
 											</div>
 										</div>
 										<div class="ln_solid"></div>
 										<div class="item form-group">
 											<div class="col-md-6 col-sm-6 offset-md-3">
-												<a href="users.php"><button class="btn btn-primary" type="button">Cancel</button></a>
-												<button type="submit" onclick="return confirm('USER ADDED SUCCESSFULLY')" class="btn btn-success">Add</button>
+											<a href="users.php"><button class="btn btn-primary" type="button">Cancel</button></a>
+												<button type="submit" onclick="return confirm('CAR UPDATED SUCCESSFULLY')" class="btn btn-success">
+													Update
+												</button>
 											</div>
 										</div>
 

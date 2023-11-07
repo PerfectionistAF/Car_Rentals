@@ -1,6 +1,5 @@
 database: cars_project
-table: users
-called in : login.php
+table: users_table
 _________________________________________________________________________
 columns:
 1) id: int - primary - auto increment

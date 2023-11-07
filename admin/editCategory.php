@@ -1,26 +1,30 @@
 <?php
-include_once("includes/logged.php");
-include_once("includes/conn.php"); #connect
-
-if($_SERVER["REQUEST_METHOD"]=="POST"){  
-	
-	$fullname = $_POST["fullname"];
-	$username = $_POST["username"];
-	$email = $_POST["email"];
-	#$active = $_POST["active"];
-	$passwd = $_POST["password"];
-	
-	try{
-		$sql = "INSERT INTO `users_table`(`fullname`, `username`, `email`, `password`) VALUES (?,?,?,?)";
-		$stmt = $conn->prepare($sql);
-		$stmt->execute([$fullname, $username, $email, $passwd]);
-		echo "USER ADDED SUCCESSFULLY";
-		header("Location:users.php");
-		die();
-	}catch(PDOException $e){
-		echo "FAILED TO INSERT USER" . $e->getMessage();
+#session_start();
+##connect
+include_once("./includes/conn.php");
+##try if logged in
+include_once("./includes/logged.php");
+##status in case cannot edit
+$status = false;
+	if(isset($_GET["id"])){
+		$id = $_GET["id"];
+		$status = true;
 	}
-}
+	if($_SERVER["REQUEST_METHOD"]=="POST"){
+		$categoryname = $_POST["categoryname"];
+		
+			try{
+				$sql = "UPDATE `categories_table` SET `categoryname`=?";
+				$stmt = $conn->prepare($sql);
+				$stmt->execute([$categoryname]);
+				echo "CATEGORY UPDATED SUCCESSFULLY";
+			}catch(PDOException $e){
+				echo "Connection failed: " . $e->getMessage();
+			}
+	}
+	
+	//show details
+	include_once("includes/showCategoryDetails.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Rent Car Admin | Add User</title>
+	<title>Rent Car Admin | Edit Category</title>
 
 	<!-- Bootstrap -->
 	<link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -62,7 +66,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-car"></i> <span>Rent Car Admin</span></a>
+						<a href="index.php" class="site_title"><i class="fa fa-car"></i> <span>Rent Car Admin</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -81,6 +85,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 					<br />
 
+					<!-- sidebar menu -->
 					<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
 							<h3>General</h3>
@@ -93,8 +98,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 								</li>
 								<li><a><i class="fa fa-edit"></i> Categories <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="addCategory.html">Add Category</a></li>
-										<li><a href="categories.html">Categories List</a></li>
+										<li><a href="addCategory.php">Add Category</a></li>
+										<li><a href="categories.php">Categories List</a></li>
 									</ul>
 								</li>
 								<li><a><i class="fa fa-desktop"></i> Cars <span class="fa fa-chevron-down"></span></a>
@@ -138,7 +143,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 						<ul class=" navbar-right">
 							<li class="nav-item dropdown open" style="padding-left: 15px;">
 								<a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-									<img src="images/img.jpg" alt=""><?php $_SESSION["fullname"]?>
+									<img src="images/img.jpg" alt=""><?php echo $_SESSION["fullname"]?>
 								</a>
 								<div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
 									<a class="dropdown-item" href="javascript:;"> Profile</a>
@@ -226,7 +231,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>Manage Users</h3>
+							<h3>Edit Category</h3>
 						</div>
 
 						<div class="title_right">
@@ -245,7 +250,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 						<div class="col-md-12 col-sm-12 ">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Add User</h2>
+									<h2>Edit Category</h2>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 										</li>
@@ -265,55 +270,23 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 								</div>
 								<div class="x_content">
 									<br />
-									<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"  id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
+									<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
 										<div class="item form-group">
-											<label class="col-form-label col-md-3 col-sm-3 label-align" for="fullname">Full Name <span class="required">*</span>
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="categoryname">Edit Category <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="fullname" name="fullname" required="required" class="form-control ">
+												<input type="text" id="categoryname" name="categoryname" value="<?php echo $categoryname?>" required="required" class="form-control">
 											</div>
 										</div>
-										<div class="item form-group">
-											<label class="col-form-label col-md-3 col-sm-3 label-align" for="username">Username <span class="required">*</span>
-											</label>
-											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="user-name" name="username" required="required" class="form-control">
-											</div>
-										</div>
-										<div class="item form-group">
-											<label for="email" class="col-form-label col-md-3 col-sm-3 label-align">Email <span class="required">*</span></label>
-											<div class="col-md-6 col-sm-6 ">
-												<input id="email" class="form-control" type="email" name="email" required="required">
-											</div>
-										</div>
-										<div class="item form-group">
-											<?php
-											/*if($active){
-												$activeBox="checked";
-											}
-											else{
-												$activeBox="";
-											}*/?>
-											<label class="col-form-label col-md-3 col-sm-3 label-align">Active</label>
-											<div class="checkbox">
-												<label>
-													<input type="checkbox" class="flat">
-												</label>
-											</div>
-										</div>
-										<div class="item form-group">
-											<label class="col-form-label col-md-3 col-sm-3 label-align" for="password">Password <span class="required">*</span>
-											</label>
-											<div class="col-md-6 col-sm-6 ">
-												<input type="password" id="password" name="password" required="required" class="form-control">
-											</div>
-										</div>
+										
 										<div class="ln_solid"></div>
 										<div class="item form-group">
 											<div class="col-md-6 col-sm-6 offset-md-3">
-												<a href="users.php"><button class="btn btn-primary" type="button">Cancel</button></a>
-												<button type="submit" onclick="return confirm('USER ADDED SUCCESSFULLY')" class="btn btn-success">Add</button>
+											<a href="categories.php"><button class="btn btn-primary" type="button">Cancel</button></a>
+												<button type="submit" onclick="return confirm('CATEGORY UPDATED SUCCESSFULLY')" class="btn btn-success">
+													Update
+												</button>
 											</div>
 										</div>
 

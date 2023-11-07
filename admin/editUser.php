@@ -6,16 +6,19 @@ include_once("./includes/conn.php");
 include_once("./includes/logged.php");
 ##status in case cannot edit
 $status = false;
+$again = false;
 	if(isset($_GET["id"])){
 		$id = $_GET["id"];
 		$status = true;
-		}
-
+	}
 	if($_SERVER["REQUEST_METHOD"]=="POST"){
 		$fullname = $_POST["fullname"];
+		if($fullname == $_SESSION["fullname"]){
+			$again = true;
+		}
 		$username = $_POST["username"];
 		$email = $_POST["email"];
-		
+
 		if(isset($_POST["active"])){
 		  $active = 1;
 		}
@@ -71,7 +74,6 @@ $status = false;
 	<!-- Custom Theme Style -->
 	<link href="build/css/custom.min.css" rel="stylesheet">
 </head>
-
 <body class="nav-md">
 	<div class="container body">
 		<div class="main_container">
@@ -320,12 +322,14 @@ $status = false;
 										</div>
 										<div class="ln_solid"></div>
 										<div class="item form-group">
+											<?php $_SESSION["fullname"] = $fullname;?>
 											<div class="col-md-6 col-sm-6 offset-md-3">
 												<a href="users.php"><button class="btn btn-primary" type="button">Cancel</button></a>
-												<button type="submit" onclick="return confirm('USER UPDATED SUCCESSFULLY')" class="btn btn-success">Update</button>
+												<button type="submit" onclick="return confirm('USER UPDATED SUCCESSFULLY')" class="btn btn-success">
+													Update
+												</button>
 											</div>
 										</div>
-
 									</form>
 								</div>
 							</div>

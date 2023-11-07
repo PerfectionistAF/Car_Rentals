@@ -1,23 +1,53 @@
 inside admin
 --------
 1- create registration and login system
+--------DONE 
+
 2- login/register by login.php
+--------DONE (***LEFT IS PASSWORD***, ERROR 404)
+
 3- show the full name of the user at the top right and top left of the admin panel on all pages.
+--------DONE ADD SESSION FULL NAME TO ALL ADMIN PANELS **UPDATE FULLNAME, HAS TO SHOW***
+
 4- show users details in users.php.
+--------DONE
+
 5- if we press edit, we can display user data and update it from edituser.php
+--------DONE(***PASSWORD EDITING NOT WORKING***)
+
 6- directly add user from addUser.php
+--------DONE
+
 7- add categories for the cars from addCategory.php
+--------DONE
+
 8- show categories list on categories.php
+--------DONE
+
 9- if we press delete we can remove the category only if it has no data in the cars table.
+--------FAILED(***CATEGORY ONLY REMOVED FROM TABLE, NO CHECKS TO DATA IN CARS)
+
 10- edit the category if we press edit using editCategory.php.
-11- add carfrom addCar.php
+--------DONE
+
+11- add car from addCar.php
+--------DONE
+
 12- show cars list on cars.php
+--------DONE
+ 
 13- if we press delete we can remove the car.
+--------DONE
+
 14- edit the car if we press edit using editCar.php
+--------DONE
+
 
 
 main website
 --------
 1- inside index.php display latest 6 cars using title, image, price, Luggage, Doors, Passenger and short description max 100 char.
+
 2- when we press any car we can display the car details on single.php
+
 3- at the right, we should display all categories name from the DB.
