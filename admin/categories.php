@@ -4,7 +4,10 @@
 include_once("./includes/conn.php");
 ##try if logged in
 include_once("./includes/logged.php");
+$request = false;
 try{
+  
+	$request = true;
   $sql = "SELECT * FROM `categories_table`";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute();
@@ -44,14 +47,14 @@ try{
     <!-- Custom Theme Style -->
     <link href="build/css/custom.min.css" rel="stylesheet">
   </head>
-
+  <?php if($request){?>
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.php" class="site_title"><i class="fa fa-car"></i></i> <span>Rent Car Admin</span></a>
+              <a href="../index.php" class="site_title"><i class="fa fa-car"></i></i> <span>Rent Car Admin</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -337,4 +340,8 @@ try{
     <script src="build/js/custom.min.js"></script>
 
   </body>
+  <?php } 
+else{
+	include_once("includes/404.php");
+}?>
 </html>

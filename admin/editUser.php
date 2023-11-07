@@ -80,7 +80,7 @@ $again = false;
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-car"></i> <span>Rent Car Admin</span></a>
+						<a href="../index.php" class="site_title"><i class="fa fa-car"></i> <span>Rent Car Admin</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -112,14 +112,14 @@ $again = false;
 								</li>
 								<li><a><i class="fa fa-edit"></i> Categories <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="addCategory.html">Add Category</a></li>
-										<li><a href="categories.html">Categories List</a></li>
+										<li><a href="addCategory.php">Add Category</a></li>
+										<li><a href="categories.php">Categories List</a></li>
 									</ul>
 								</li>
 								<li><a><i class="fa fa-desktop"></i> Cars <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="addCar.html">Add Car</a></li>
-										<li><a href="cars.html">Cars List</a></li>
+										<li><a href="addCar.php">Add Car</a></li>
+										<li><a href="cars.php">Cars List</a></li>
 									</ul>
 								</li>
 							</ul>

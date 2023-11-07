@@ -1,4 +1,21 @@
-<!doctype html>
+<?php
+include_once("admin/includes/conn.php");
+if(isset($_GET["id"])){
+    $id = $_GET["id"];
+    $table = "cars_table";
+try{
+    $sql = "SELECT * FROM `$table` WHERE id =?";##change *
+	$stmt = $conn->prepare($sql);
+	$stmt->execute([$id]);
+    $row = $stmt->fetch();
+    $title = $row["title"];
+  }catch(PDOException $e){
+    echo "FAILED:" . $e->getMessage();
+  }
+}
+
+?>
+<!DOCTYPE html>
 <html lang="en">
 
   <head>
@@ -28,51 +45,13 @@
     
     <div class="site-wrap" id="home-section">
 
-      <div class="site-mobile-menu site-navbar-target">
-        <div class="site-mobile-menu-header">
-          <div class="site-mobile-menu-close mt-3">
-            <span class="icon-close2 js-menu-toggle"></span>
-          </div>
-        </div>
-        <div class="site-mobile-menu-body"></div>
-      </div>
+      <?php
+        #<!--Site Wrap-->
+        include_once("includes/siteWrap.php");
+        #<!--Site Header-->
+        include_once("includes/header.php");
+      ?>
 
-
-
-      <header class="site-navbar site-navbar-target" role="banner">
-
-        <div class="container">
-          <div class="row align-items-center position-relative">
-
-            <div class="col-3">
-              <div class="site-logo">
-                <a href="index.html"><strong>CarRental</strong></a>
-              </div>
-            </div>
-
-            <div class="col-9  text-right">
-              
-              <span class="d-inline-block d-lg-none"><a href="#" class=" site-menu-toggle js-menu-toggle py-5 "><span class="icon-menu h3 text-black"></span></a></span>
-
-              <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
-                <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                  <li><a href="index.html" class="nav-link">Home</a></li>
-                  <li><a href="listing.html" class="nav-link">Listing</a></li>
-                  <li><a href="testimonials.html" class="nav-link">Testimonials</a></li>
-                  <li class="active"><a href="blog.html" class="nav-link">Blog</a></li>
-                  <li><a href="about.html" class="nav-link">About</a></li>
-                  <li><a href="contact.html" class="nav-link">Contact</a></li>
-                </ul>
-              </nav>
-            </div>
-
-            
-          </div>
-        </div>
-
-      </header>
-
-      
       <div class="hero inner-page" style="background-image: url('images/hero_1_a.jpg');">
         
         <div class="container">
@@ -80,7 +59,7 @@
             <div class="col-lg-12">
 
               <div class="intro">
-                <h1><strong>Single Blog Posts Title</strong></h1>
+                <h1><strong><?php echo (isset($title))? $title:"Invalid"; ?></strong></h1>
                 <div class="pb-4"><strong class="text-black">Posted on May 22, 2020</strong></div>
               </div>
 
@@ -89,77 +68,10 @@
         </div>
       </div>
 
-    
-
-    <div class="site-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-8 blog-content">
-            <img src="images/car_2.jpg" alt="" class="img-fluid p-3 mb-5 bg-white rounded">
-            
-            <div class="grey-bg container-fluid">
-              <section id="minimal-statistics">
-                <div class="row">
-                  <div class="col-12 mt-3 mb-1">
-                    <h4 class="text-uppercase">Properties</h4>
-                    <p>Car Details</p>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-xl-3 col-sm-6 col-12"> 
-                    <div class="card">
-                      <div class="card-content">
-                        <div class="card-body">
-                          <div class="media d-flex">
-                            <div class="align-self-center">
-                              <i class="icon-pencil primary font-large-2 float-left"></i>
-                            </div>
-                            <div class="media-body text-right">
-                              <h3>4</h3>
-                              <span>Doors</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xl-3 col-sm-6 col-12">
-                    <div class="card">
-                      <div class="card-content">
-                        <div class="card-body">
-                          <div class="media d-flex">
-                            <div class="align-self-center">
-                              <i class="icon-speech warning font-large-2 float-left"></i>
-                            </div>
-                            <div class="media-body text-right">
-                              <h3>4</h3>
-                              <span>Laggage</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xl-3 col-sm-6 col-12">
-                    <div class="card">
-                      <div class="card-content">
-                        <div class="card-body">
-                          <div class="media d-flex">
-                            <div class="align-self-center">
-                              <i class="icon-graph success font-large-2 float-left"></i>
-                            </div>
-                            <div class="media-body text-right">
-                              <h3>64.89 $</h3>
-                              <span>Price</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>              
-            </div>
+      <?php
+        #<!--Car Details->
+        include_once("includes/detail.php");
+      ?>
 
             <p class="lead">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
             <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>

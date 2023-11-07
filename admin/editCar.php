@@ -85,7 +85,7 @@ $again = false;
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.php" class="site_title"><i class="fa fa-car"></i> <span>Rent Car Admin</span></a>
+						<a href="../index.php" class="site_title"><i class="fa fa-car"></i> <span>Rent Car Admin</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -359,7 +359,7 @@ $again = false;
 										<div class="ln_solid"></div>
 										<div class="item form-group">
 											<div class="col-md-6 col-sm-6 offset-md-3">
-											<a href="users.php"><button class="btn btn-primary" type="button">Cancel</button></a>
+											<a href="cars.php"><button class="btn btn-primary" type="button">Cancel</button></a>
 												<button type="submit" onclick="return confirm('CAR UPDATED SUCCESSFULLY')" class="btn btn-success">
 													Update
 												</button>

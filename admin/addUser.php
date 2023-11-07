@@ -2,8 +2,9 @@
 include_once("includes/logged.php");
 include_once("includes/conn.php"); #connect
 
-if($_SERVER["REQUEST_METHOD"]=="POST"){  
-	
+$request = false;
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+	$request = true; 
 	$fullname = $_POST["fullname"];
 	$username = $_POST["username"];
 	$email = $_POST["email"];
@@ -55,14 +56,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 	<!-- Custom Theme Style -->
 	<link href="build/css/custom.min.css" rel="stylesheet">
 </head>
-<?php if($_SERVER["REQUEST_METHOD"]=="POST"){?>
+<?php if($request){?>
 <body class="nav-md">
 	<div class="container body">
 		<div class="main_container">
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.php" class="site_title"><i class="fa fa-car"></i> <span>Rent Car Admin</span></a>
+						<a href="../index.php" class="site_title"><i class="fa fa-car"></i> <span>Rent Car Admin</span></a>
 					</div>
 
 					<div class="clearfix"></div>
