@@ -51,8 +51,4 @@ main website
 2- when we press any car we can display the car details on single.php
 --------DONE 
 3- at the right, we should display all categories name from the DB.
-<<<<<<< HEAD
 --------DONE 
-=======
---------DONE 
->>>>>>> e5af03f851c4a440b7512ad362d7d5900751e27e

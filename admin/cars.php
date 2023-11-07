@@ -44,7 +44,7 @@ try{
     <!-- Custom Theme Style -->
     <link href="build/css/custom.min.css" rel="stylesheet">
   </head>
-
+  <?php if($_SERVER["REQUEST_METHOD"]=="POST"){?>
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
@@ -345,4 +345,8 @@ try{
     <script src="build/js/custom.min.js"></script>
 
   </body>
+  <?php } 
+else{
+	include_once("includes/404.php");
+}?>
 </html>
