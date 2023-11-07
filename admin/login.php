@@ -6,7 +6,7 @@
  * pass: example / test2
  * 
  * CREDENTIALS OF ADMIN ACCOUNT:
- * fullname: John Doe
+ * fullname: Smithson
  * username: admin
  * email: admin@rentals.com
  * pass: admin
@@ -19,20 +19,22 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
   ###sign up
   if(isset($_POST["signup"])){
     $fullname = $_POST["fullname"];
-    $username = $_POST["username"];
+    $username = $_POST["username2"];
     $email = $_POST["email"];
     #$_SESSION["password"] = $_POST["password"];##just to try
-    $pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    $pass = password_hash($_POST["password2"], PASSWORD_DEFAULT);
     try{
       $sql = "INSERT INTO `users_table`(`fullname`, `username`, `email`, `password`) VALUES (?,?,?,?)";
       $stmt = $conn->prepare($sql);
       $stmt->execute([$fullname, $username, $email, $pass]);
-      echo "DATA INSERTED SUCCESSFULLY";
+      #echo "DATA INSERTED SUCCESSFULLY";
       ##admin index page VS user index page
       header("Location: ./login.php");
       die();
     }catch(PDOException $e){
-      echo "FAILED:" . $e->getMessage();
+      header("Location: ./includes/404.php");
+      die();
+      #echo "FAILED:" . $e->getMessage();
     }
   }
   elseif(isset($_POST["signin"])){
@@ -46,15 +48,16 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         #echo "EMAIL FOUND";
         $result = $stmt->fetch();
         $fullname = $result["fullname"];
+        #$username = $result["username"];
         $hash = $result["password"];
         $verify = password_verify($pass, $hash);
         if($verify){
           $_SESSION["logged"] = true;
           $_SESSION["fullname"] = $fullname;
-
-          echo $fullname;
-          echo "<br>";
-          echo "SUCCESSFUL";
+          $_SESSION["user_check"] = $username;
+          #echo $fullname;
+          #echo "<br>";
+          #echo "SUCCESSFUL";
           header("Location: ./users.php");
           die();
         }
@@ -116,7 +119,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
               <div>
                 <!--<a class="btn btn-default submit" href="index.html">Log in</a>-->
                 <input type="submit" name="signin" value="Log in">
-                <a class="reset_pass" href="#">Lost your password?</a>
+                <a class="reset_pass" href="includes/resetPassword.php" value="reset">Lost your password?</a>
               </div>
 
               <div class="clearfix"></div>
@@ -147,13 +150,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                 <input type="text" class="form-control" placeholder="Fullname" name="fullname" required="" />
               </div>
               <div>
-                <input type="text" class="form-control" placeholder="Username" name="username" required="" />
+                <input type="text" class="form-control" placeholder="Username" name="username2" required="" />
               </div>
               <div>
                 <input type="email" class="form-control" placeholder="Email" name="email" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" name="password" required="" />
+                <input type="password" class="form-control" placeholder="Password" name="password2" required="" />
               </div>
               <div>
                 <!--<a class="btn btn-default submit" href= "index.html">Submit</a>

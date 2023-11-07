@@ -15,11 +15,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 		$sql = "INSERT INTO `users_table`(`fullname`, `username`, `email`, `password`) VALUES (?,?,?,?)";
 		$stmt = $conn->prepare($sql);
 		$stmt->execute([$fullname, $username, $email, $passwd]);
-		echo "USER ADDED SUCCESSFULLY";
+		#echo "USER ADDED SUCCESSFULLY";
 		header("Location:users.php");
 		die();
 	}catch(PDOException $e){
+		header("Location:includes/404.php");
 		echo "FAILED TO INSERT USER" . $e->getMessage();
+		die();
 	}
 }
 ?>
@@ -377,7 +379,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 </body>
 <?php } 
-else{
+/*else{
 	include_once("includes/404.php");
-}?>
+}*/?>
 </html>

@@ -27,11 +27,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 		$sql = "INSERT INTO `cars_table`(`title`, `content`, `luggage`, `doors`, `passengers`, `price`, `active`, `image`) VALUES (?,?,?,?,?,?,?,?)";
 		$stmt = $conn->prepare($sql);
 		$stmt->execute([$title, $content, $luggage, $doors, $passengers, $price, $active, $image_name]);
-		echo "CAR ADDED SUCCESSFULLY";
+		#echo "CAR ADDED SUCCESSFULLY";
 		header("Location:cars.php");
 		die();
 	}catch(PDOException $e){
+		header("Location:includes/404.php");
 		echo "FAILED TO INSERT CAR" . $e->getMessage();
+		die();
 	}
 }
 ?>
@@ -412,7 +414,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 	<script src="build/js/custom.min.js"></script>
 
 </body>
-<?php# } 
+<?php
+# } 
 #else{
 	#include_once("includes/404.php");
 #}?>

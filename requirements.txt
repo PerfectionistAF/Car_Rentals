@@ -4,16 +4,16 @@ inside admin
 --------DONE 
 
 2- login/register by login.php
---------DONE (***LEFT IS PASSWORD***, ERROR 404)
+--------DONE (***PASSWORD ISSUE IN resetPassword.php***ERROR 404 IS USED WHEN A REQUEST CAN BE REPEATED***)
 
 3- show the full name of the user at the top right and top left of the admin panel on all pages.
---------DONE ADD SESSION FULL NAME TO ALL ADMIN PANELS **UPDATE FULLNAME, HAS TO SHOW***
+--------DONE 
 
 4- show users details in users.php.
 --------DONE
 
 5- if we press edit, we can display user data and update it from edituser.php
---------DONE(***PASSWORD EDITING NOT WORKING***)
+--------DONE (***PASSWORD EDITING NOT WORKING PROPERLY, IT GETS EDITED BUT THE HASH MAKES IT NOT AUTHENTICATE WHEN LOG IN AGAIN***)
 
 6- directly add user from addUser.php
 --------DONE
@@ -25,7 +25,7 @@ inside admin
 --------DONE
 
 9- if we press delete we can remove the category only if it has no data in the cars table.
---------FAILED(***CATEGORY ONLY REMOVED FROM TABLE, NO CHECKS TO DATA IN CARS)
+--------FAILED (***CATEGORY ONLY REMOVED FROM TABLE, NO CHECKS TO DATA IN CARS)
 
 10- edit the category if we press edit using editCategory.php.
 --------DONE
@@ -37,10 +37,10 @@ inside admin
 --------DONE
  
 13- if we press delete we can remove the car.
---------DONE
+--------DONE (***DELETE IN CARS AND CATEGORIES WAS SEPARATED, NOT WORKING AS A BLOCK IN EDIT FILES***)
 
 14- edit the car if we press edit using editCar.php
---------DONE
+--------DONE (***ISSUE HERE***)
 
 
 

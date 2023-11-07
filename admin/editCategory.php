@@ -17,9 +17,13 @@ $status = false;
 				$sql = "UPDATE `categories_table` SET `categoryname`=?";
 				$stmt = $conn->prepare($sql);
 				$stmt->execute([$categoryname]);
-				echo "CATEGORY UPDATED SUCCESSFULLY";
+				#echo "CATEGORY UPDATED SUCCESSFULLY";
+				header("Location:cars.php");
+				die();
 			}catch(PDOException $e){
-				echo "Connection failed: " . $e->getMessage();
+				header("Location:includes/404.php");
+				echo "FAILED TO EDIT CATEGORY: " . $e->getMessage();
+				die();
 			}
 	}
 	

@@ -349,7 +349,7 @@ try{
 
   </body>
   <?php } 
-else{
+/*else{
 	include_once("includes/404.php");
-}?>
+}*/?>
 </html>

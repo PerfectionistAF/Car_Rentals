@@ -32,9 +32,13 @@ $again = false;
 				$sql = "UPDATE `users_table` SET `fullname`=?, `username`=?, `email`=?, `active`=?, `password`=? WHERE id = ?";
 				$stmt = $conn->prepare($sql);
 				$stmt->execute([$fullname,$username,$email,$active,$pass,$id]);
-				echo "USER UPDATED SUCCESSFULLY";
+				#echo "USER UPDATED SUCCESSFULLY";
+				header("Location:users.php");
+				die();
 			}catch(PDOException $e){
-				echo "Connection failed: " . $e->getMessage();
+				header("Location:includes/404.php");
+				echo "FAILED TO EDIT USER: " . $e->getMessage();
+				die();
 			}
 	}
 	
@@ -317,12 +321,12 @@ $again = false;
 											<label class="col-form-label col-md-3 col-sm-3 label-align" for="password">Password <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="password" id="password" name="password" value="<?php echo $pass ?>" required="required" class="form-control">
+												<input type="text" id="password" name="password" value="<?php echo $pass ?>" required="required" class="form-control">
 											</div>
 										</div>
 										<div class="ln_solid"></div>
 										<div class="item form-group">
-											<?php $_SESSION["fullname"] = $fullname;?>
+											<?php #$_SESSION["fullname"] = $fullname;##used to update fullname incase we edited the current user?>
 											<div class="col-md-6 col-sm-6 offset-md-3">
 												<a href="users.php"><button class="btn btn-primary" type="button">Cancel</button></a>
 												<button type="submit" onclick="return confirm('USER UPDATED SUCCESSFULLY')" class="btn btn-success">

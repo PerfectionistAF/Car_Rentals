@@ -18,6 +18,6 @@ if(isset($_GET["id"])){
   #}
 }
 else{
-    echo "INVALID REQUEST";
+  include_once("includes/404.php");
 }
 ?>

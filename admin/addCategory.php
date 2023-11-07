@@ -10,11 +10,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 		$sql = "INSERT INTO `categories_table`(`categoryname`) VALUES (?)";
 		$stmt = $conn->prepare($sql);
 		$stmt->execute([$categoryname]);
-		echo "CATEGORY ADDED SUCCESSFULLY";
+		#echo "CATEGORY ADDED SUCCESSFULLY";
 		header("Location:categories.php");
 		die();
 	}catch(PDOException $e){
+		header("Location:includes/404.php");
 		echo "FAILED TO INSERT CATEGORY" . $e->getMessage();
+		die();
 	}
 }
 ?>
@@ -340,7 +342,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
 </body>
 <?php } 
-else{
+/*else{
 	include_once("includes/404.php");
-}?>
+}*/?>
 </html>

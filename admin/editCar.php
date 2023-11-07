@@ -35,9 +35,13 @@ $again = false;
 				$sql = "UPDATE `cars_table` SET `title`=?, `image=?`, `content`=?, `luggage`=?, `doors`=?, `passengers`=?, `price`=?, `image`=?, `active`=?, `categorytype`=? WHERE id = ?";
 				$stmt = $conn->prepare($sql);
 				$stmt->execute([$title, $content, $luggage, $doors, $passengers, $price, $active, $categorytype, $image_name, $id]);
-				echo "CAR UPDATED SUCCESSFULLY";
+				#echo "CAR UPDATED SUCCESSFULLY";
+				header("Location:cars.php");
+				die();
 			}catch(PDOException $e){
-				echo "Connection failed: " . $e->getMessage();
+				header("Location:includes/404.php");
+				echo "FAILED TO EDIT CAR: " . $e->getMessage();
+				die();
 			}
 	}
 	
