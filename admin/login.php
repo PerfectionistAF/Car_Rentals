@@ -51,15 +51,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         if($verify){
           $_SESSION["logged"] = true;
           $_SESSION["fullname"] = $fullname;
-          #echo "USER FOUND";
-          /*$_SESSION["logged"]=true; ##FIRST BEFORE LINE 5
-          if(isset($_SESSION["page"])){
-            $page = $_SESSION["page"];  ##testimonials or team not both session
-          }
-          else{
-            $page = "cars.php"; ##cars session aka regular session
-          }*/
-          #$page = "index.html";
+
           echo $fullname;
           echo "<br>";
           echo "SUCCESSFUL";

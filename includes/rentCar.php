@@ -57,7 +57,7 @@ try{
                                 </div>
                                 <div>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos at eum, voluptatem quibusdam.</p>
-                                <p><a href="single.php" class="btn btn-primary btn-sm">Rent Now</a></p>
+                                <p><a href="./single.php?id=<?php echo $id ?>" class="btn btn-primary btn-sm">Rent Now</a></p>
                                 </div>
                             </div>
 

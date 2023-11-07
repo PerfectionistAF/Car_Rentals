@@ -16,6 +16,13 @@ try{
     $passengers = $result["passengers"];
     $price = $result["price"];
     $categorytype = $result["categorytype"];
+    if($categorytype){
+        $categoryStr = "Crossover";
+            }
+    else{
+        $categoryStr = "Sedan";
+            }
+
     $image = $result["image"];
     
   }catch(PDOException $e){
