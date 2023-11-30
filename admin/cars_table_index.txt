@@ -1,0 +1,19 @@
+database: cars_project
+table: cars_table
+_________________________________________________________________________
+columns:
+1) id: int - primary - auto increment
+2) title: varchar(100) - index
+3) content: varchar(100)
+4) luggage: varchar(50)
+5) doors: varchar(50)
+6) passengers: int
+7) price: float
+8) active: bool - active = 1 , yes ; active = 0 , no
+9) image: varchar(100)
+10)category varchar(100)
+
+joins:-----FAILED FOREIGN CONSTRAINTS
+1) inner join with categories_table
+EVERY CAR HAS A CATEGORY		
+			

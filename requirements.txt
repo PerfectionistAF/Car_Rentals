@@ -1,0 +1,54 @@
+inside admin
+--------
+1- create registration and login system
+--------DONE 
+
+2- login/register by login.php
+--------DONE (***PASSWORD ISSUE IN resetPassword.php***ERROR 404 IS USED WHEN A REQUEST CAN BE REPEATED***)
+
+3- show the full name of the user at the top right and top left of the admin panel on all pages.
+--------DONE 
+
+4- show users details in users.php.
+--------DONE
+
+5- if we press edit, we can display user data and update it from edituser.php
+--------DONE (***PASSWORD EDITING NOT WORKING PROPERLY, IT GETS EDITED BUT THE HASH MAKES IT NOT AUTHENTICATE WHEN LOG IN AGAIN***)
+
+6- directly add user from addUser.php
+--------DONE
+
+7- add categories for the cars from addCategory.php
+--------DONE
+
+8- show categories list on categories.php
+--------DONE
+
+9- if we press delete we can remove the category only if it has no data in the cars table.
+--------FAILED (***CATEGORY ONLY REMOVED FROM TABLE, NO CHECKS TO DATA IN CARS)
+
+10- edit the category if we press edit using editCategory.php.
+--------DONE
+
+11- add car from addCar.php
+--------DONE
+
+12- show cars list on cars.php
+--------DONE
+ 
+13- if we press delete we can remove the car.
+--------DONE (***DELETE IN CARS AND CATEGORIES WAS SEPARATED, NOT WORKING AS A BLOCK IN EDIT FILES***)
+
+14- edit the car if we press edit using editCar.php
+--------DONE (***ISSUE HERE***)
+
+
+
+main website
+--------
+1- inside index.php display latest 6 cars using title, image, price, Luggage, Doors, Passenger and short description max 100 char.
+--------DONE 
+2- when we press any car we can display the car details on single.php
+--------DONE 
+3- at the right, we should display all categories name from the DB.
+--------DONE 

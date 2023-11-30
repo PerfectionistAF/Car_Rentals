@@ -1,0 +1,12 @@
+database: cars_project
+table: users_table
+_________________________________________________________________________
+columns:
+1) id: int - primary - auto increment
+2) regdate: timestamp
+3) fullname: varchar(50)
+4) username: varchar(50) - index
+5) email: varchar(50) - index
+6) password: varchar(60) ##HASHED##
+7) image: varchar(100)----DELETED SINCE NOT A FUNCTIONAL REQUIREMENT
+8) active: bool - active = 1 , yes ; active = 0 , no

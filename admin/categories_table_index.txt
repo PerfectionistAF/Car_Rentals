@@ -1,0 +1,6 @@
+database: cars_project
+table: categories_table
+_________________________________________________________________________
+columns:
+1) id: int - primary - auto increment
+2) categoryname: varchar(50) - index
