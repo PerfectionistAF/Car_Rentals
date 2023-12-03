@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel Contact us</title>
+        <title>Laravel Insert Photo</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -16,8 +16,15 @@
         <!--</style>-->
     </head>
     <body>
-        <h1>Form submitted</h1><br>
-
+        <h1>Insert Photo</h1><br>
+        <form method="POST" action="{{ route('photos.store') }}">
+            @csrf   <!---hide form data, avoid cross token attacks-->
+        <label for="photo_name">Photo name:</label><br>
+        <input type="text" id="photo_name" name="photo_name"><br>
+        
+        <input type ="submit" > 
+        
+        </form><br>
         <a href= "{{ route('home') }}"> GET HOME</a>
     </body>
 </html>

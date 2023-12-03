@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProfileController; //use the class ProfileController
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UserProfileController;
@@ -141,6 +142,22 @@ Route::get('/contact_us', function(){
 //try controller
 Route::get('/customer', [CustomerController::class , 'index']);
 Route::get('/data', [CustomerController::class , 'data']);
-
+//try invokable or single action controller
 Route::get('/userprofile', [UserProfileController::class, '__invoke']);//call the single action method
 //can remove the method
+
+//try resource controller--CRUD
+Route::resource('/photos', PhotoController::class);
+/*Route::post('photos.store', function(){
+    return view('photos.list');
+})->name('photos.store');*/
+/*
+Verb	    URI	                    Action	Route Name
+GET	        /photos	                index	photos.index
+GET	        /photos/create	        create	photos.create
+POST	    /photos	                store	photos.store
+GET	        /photos/{photo}	        show	photos.show
+GET	        /photos/{photo}/edit	edit	photos.edit
+PUT/PATCH	/photos/{photo}	        update	photos.update
+DELETE	    /photos/{photo}	        destroy	photos.destroy
+*/

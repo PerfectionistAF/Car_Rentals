@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel Contact us</title>
+        <title>Laravel LIST</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -17,7 +17,7 @@
     </head>
     <body>
         <h1>Form submitted</h1><br>
-
+        <?php #echo $stmt?>
         <a href= "{{ route('home') }}"> GET HOME</a>
     </body>
 </html>
