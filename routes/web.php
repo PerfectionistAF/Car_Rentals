@@ -3,6 +3,9 @@
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProfileController; //use the class ProfileController
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CollectiveViewController;//task 4
+use App\Http\Middleware\CheckAge;//use checkAge
+use App\Http\Middleware\CheckUser;//use checkAdmin
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -115,7 +118,7 @@ Route::post('receive', function(){
 
 ////////TASK THREE
 //First page: view contact us page
-Route::view('/contact_us', 'contact_us');
+Route::view('/contact_us', 'contact_us'); //or ->middleware(CheckAge::class) 
 //After post
 //Second page: view about us page
 Route::post('readmore', function(){
@@ -161,3 +164,24 @@ GET	        /photos/{photo}/edit	edit	photos.edit
 PUT/PATCH	/photos/{photo}	        update	photos.update
 DELETE	    /photos/{photo}	        destroy	photos.destroy
 */
+
+
+////////TASK FOUR
+//get method for home page
+Route::get('/home-control', [CollectiveViewController::class , 'home']);
+//get method for about us page
+Route::get('/about-control', [CollectiveViewController::class , 'about_us']);
+//get method for contact us page
+Route::get('/contact-control', [CollectiveViewController::class , 'contact_us']);
+//post method for contact us page
+Route::post('/submit-control', [CollectiveViewController::class , 'submit']);
+
+
+/////SESSION 5
+Route::view('/contact_us/{age}', 'contact_us')->middleware('checkAge'); //or ->middleware(CheckAge::class) 
+
+////////TASK FIVE
+Route::get('/admin/{name}', function () {
+    $data = ['admin'=>'Sohayla'];
+    return view('home', $data); 
+})->name('home')->middleware(CheckUser::class);

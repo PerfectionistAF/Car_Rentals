@@ -13,7 +13,7 @@ class Kernel extends HttpKernel
      *
      * @var array<int, class-string|string>
      */
-    protected $middleware = [
+    protected $middleware = [   //used for global middleware
         // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
         \Illuminate\Http\Middleware\HandleCors::class,
@@ -52,7 +52,7 @@ class Kernel extends HttpKernel
      *
      * @var array<string, class-string|string>
      */
-    protected $middlewareAliases = [
+    protected $middlewareAliases = [//used for other types, specific route
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
@@ -64,5 +64,7 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        //CheckAge Middleware
+        'checkAge' => \App\Http\Middleware\CheckAge::class,//used for a route
     ];
 }

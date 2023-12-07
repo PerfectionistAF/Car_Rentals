@@ -18,13 +18,19 @@
     <body>
         <h1>Hello, 
             <?php 
+            echo $admin . "!";
+            echo "<br>";
             #2 alternative methods to return 
-            echo $first_name;
+            #echo $first_name;
+            #{{$last_name}}
             ?>
             <!--written instead of php block-->
-            {{$last_name}}
+            
         </h1>
     </body>
-    <a href= "{{ route('contact_us') }}"> <h1>GET CONTACT</h1></a><!---view contact_us--->
+    <a href= "/contact_us/{age}"> <h1>GET CONTACT</h1></a>
     <a href= "{{ route('about_us') }}"> <h1>GET ABOUT</h1></a><!---view about_us--->
+
 </html>
+
+    <!--<a href= "{{ route('contact_us') }}"> <h1>GET CONTACT</h1></a>---><!---view contact_us--->

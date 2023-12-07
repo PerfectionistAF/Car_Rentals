@@ -26,6 +26,6 @@
         <input type="text" id="last_name" name="last_name">
         <input type ="submit" > 
         </form><br>
-        <a href= "{{ route('home') }}"> GET HOME</a> <!---get home page so you can pass data-->
+        <a href= "/admin/{name}"> GET HOME</a>
     </body>
 </html>

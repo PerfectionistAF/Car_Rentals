@@ -45,6 +45,6 @@
     </div>
   </div>
 
-  <a href= "{{ route('home') }}"> <h1>GET HOME</h1></a><!---get home--->
+  <a href= "{{ route('home') }}"> <h1>GET HOME</h1></a><!---view home--->
   <a href= "{{ route('contact_us') }}"> <h1>GET CONTACT</h1></a><!---view contact--->
 </div>
