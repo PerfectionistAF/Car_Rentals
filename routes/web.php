@@ -4,6 +4,7 @@ use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProfileController; //use the class ProfileController
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CollectiveViewController;//task 4
+use App\Http\Controllers\PostsController;//task 7
 use App\Http\Middleware\CheckAge;//use checkAge
 use App\Http\Middleware\CheckUser;//use checkAdmin
 use App\Http\Controllers\UserProfileController;
@@ -178,10 +179,75 @@ Route::post('/submit-control', [CollectiveViewController::class , 'submit']);
 
 
 /////SESSION 5
-Route::view('/contact_us/{age}', 'contact_us')->middleware('checkAge'); //or ->middleware(CheckAge::class) 
+Route::view('/contact_us/{age}', 'contact_us')->middleware('checkAge'); //or ->middleware(CheckAge::class)
+
+//group of routes checked by a specific middlewate
+Route::middleware('CheckAge')->group(function(){
+    Route::get('/test_middle_gp1', function(){
+
+    });
+    Route::get('/test_middle_gp2', function(){
+
+    });
+    ///exempt this route from middleware
+    Route::get('/test_middle_gp3', function(){
+
+    })->withoutMiddleware('CheckAge');
+});
+/*to connect to db:
+.env file --->database 
+phpmyadmin
+php artisan migrate --->db schema
+config/database.php
+php artisan migrate:rollback  returns to last state
+php artisan migrate:status returns status of migrate
+php artisan migrate:refresh  rollback then rerun the migrations ///deletes previous data
+php artisan migrate:fresh    drop migrations then recreate them  ///deletes previous data
+CAN YOU ADD MORE MIDDLEWARES PER ROUTE?
+
+php artisan make:migrations table
+*/
 
 ////////TASK FIVE
 Route::get('/admin/{name}', function () {
     $data = ['admin'=>'Sohayla'];
     return view('home', $data); 
 })->name('home')->middleware(CheckUser::class);
+
+/////SESSION 6
+/*create a migration with its own table
+php artisan make:migration create_products_table --create=products
+
+add migration to database
+php artisan make:migration create_products_table --table=products
+
+FOREIGN KEY: ONE TO MANY RELATION
+1 customer has many orders
+*/
+
+////////TASK SIX
+/*
+create posts migration
+add columns (post_title, post_content, post_date)
+add foreign key (user_id)
+run migration
+*/
+
+/////SESSION 7
+//try controller after db facade
+Route::get('/customers', [CustomerController::class , 'index']);
+///php artisan make:model Customers -m
+//model with -m tag makes model and migration at the same time
+//to create customer
+Route::get('/customers-create', [CustomerController::class , 'create']);
+
+////////TASK SEVEN
+/*
+create posts controller
+create posts model
+view data in posts table
+insert data in posts table
+*/
+Route::get('/posts',[PostsController::class, 'index']);
+Route::get('/posts-create',[PostsController::class, 'create']);
+
