@@ -8,6 +8,7 @@ use App\Http\Controllers\PostsController;//task 7
 use App\Http\Middleware\CheckAge;//use checkAge
 use App\Http\Middleware\CheckUser;//use checkAdmin
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -262,3 +263,8 @@ Route::get('/posts-create',[PostsController::class, 'create']);
 create users controller
 insert, update and select data operations
 */
+Route::get('/users', [UserController::class , 'index'])->name('users');
+Route::get('/users-create', [UserController::class , 'create'])->name('users-create');
+Route::post('/users-store', [UserController::class , 'store'])->name('users-store');
+Route::get('/users-edit/{id}', [UserController::class , 'edit'])->name('users-edit');
+Route::post('/users-update/{id}', [UserController::class , 'update'])->name('users-update');
