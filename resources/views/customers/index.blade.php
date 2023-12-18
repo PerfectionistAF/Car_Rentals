@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -16,7 +17,7 @@
         <!--</style>-->
     </head>
     <body>
-        <table border="2">
+        <table border="2" style="margin: 10px;">
             <tr>
                 <th>Customer Name  </th>
                 <th>  Customer Email</th>
@@ -31,12 +32,16 @@
                 <td>
                     {{$val->email}}
                 </td>
+                <td><!---retreive id to update customer then add routes to web.php--->
+                    <a href="/customers-edit/{{$val->id}}">Edit</a>
+                </td>
             </tr>
             
             @endforeach
 
         </table>
-
+        <br>
+        <a href="{{route('customers-create')}}"><button style="margin: 10px;"><h2 style="color:red">    ADD CUSTOMER</h2></button></a>
     </body>
 <html>
 

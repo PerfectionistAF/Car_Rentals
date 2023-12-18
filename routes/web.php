@@ -235,11 +235,17 @@ run migration
 
 /////SESSION 7
 //try controller after db facade
-Route::get('/customers', [CustomerController::class , 'index']);
+Route::get('/customers', [CustomerController::class , 'index'])->name('customers');//route function takes alias
 ///php artisan make:model Customers -m
 //model with -m tag makes model and migration at the same time
 //to create customer
-Route::get('/customers-create', [CustomerController::class , 'create']);
+//change between dynamic and static insertion----SESSIONS 7 AND 8
+Route::get('/customers-create', [CustomerController::class , 'create'])->name('customers-create');
+Route::post('/customers-store', [CustomerController::class , 'store'])->name('customers-store');
+/////SESSION 8
+Route::get('customers-edit/{id}', [CustomerController::class , 'edit'])->name('customers-edit');
+Route::post('/customers-update/{id}', [CustomerController::class , 'update'])->name('customers-update');
+
 
 ////////TASK SEVEN
 /*
@@ -251,3 +257,8 @@ insert data in posts table
 Route::get('/posts',[PostsController::class, 'index']);
 Route::get('/posts-create',[PostsController::class, 'create']);
 
+////////TASK EIGHT
+/*
+create users controller
+insert, update and select data operations
+*/
