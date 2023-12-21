@@ -246,7 +246,10 @@ Route::post('/customers-store', [CustomerController::class , 'store'])->name('cu
 /////SESSION 8
 Route::get('customers-edit/{id}', [CustomerController::class , 'edit'])->name('customers-edit');
 Route::post('/customers-update/{id}', [CustomerController::class , 'update'])->name('customers-update');
-
+/////SESSION 9
+Route::get('customers-show/{id}', [CustomerController::class , 'show'])->name('customers-show');
+Route::delete('customers-delete/{id}', [CustomerController::class , 'destroy'])->name('customers-delete');
+Route::get('customers-delete/{id}', [CustomerController::class , 'delete']);
 
 ////////TASK SEVEN
 /*
@@ -268,3 +271,10 @@ Route::get('/users-create', [UserController::class , 'create'])->name('users-cre
 Route::post('/users-store', [UserController::class , 'store'])->name('users-store');
 Route::get('/users-edit/{id}', [UserController::class , 'edit'])->name('users-edit');
 Route::post('/users-update/{id}', [UserController::class , 'update'])->name('users-update');
+
+////////TASK NINE
+/*
+add show and delete operations in users controller
+*/
+Route::get('users-show/{id}', [UserController::class , 'show'])->name('users-show');
+Route::get('users-delete/{id}', [UserController::class , 'delete']);

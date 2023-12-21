@@ -45,4 +45,14 @@ class UserController extends Controller
         ]);
         return redirect()->route('users')->with('success', 'User Updated Successfully');
     }
+    //show operation
+    public function show(string $id){
+        $user = User::findOrFail($id);
+        return view('user.show', compact('user'));
+    }
+    //delete operation
+    public function delete(Request $request, string $id):RedirectResponse{
+        $users = User::findOrFail($id)->delete();
+        return redirect()->route('users')->with('success', 'User Deleted Successfully');
+    }
 }

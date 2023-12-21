@@ -35,6 +35,12 @@
                 <td><!---retreive id to update then add routes to web.php--->
                     <a href="/users-edit/{{$val->id}}">Edit</a>
                 </td>
+                <td>
+                    <a href="/users-show/{{$val->id}}" style="color:blue">Show</a>
+                </td>
+                <td>
+                    <a href="/users-delete/{{$val->id}}" style="color:blue">Delete</a>
+                </td>
             </tr>
             
             @endforeach

@@ -63,4 +63,18 @@ class CustomerController extends Controller
     public function customer_data(){
         return view('customers');
     }
+    //show details----SESSION 9
+    public function show(string $id){
+        $customer = Customers::findOrFail($id);
+        return view('customers.show', compact('customer'));
+    }
+    public function delete(Request $request, string $id):RedirectResponse{
+        $customers = Customers::findOrFail($id)->delete();
+        return redirect()->route('customers')->with('success', 'Customer Deleted Successfully');
+    }
+    public function destroy(Request $request):RedirectResponse{
+        $id=$request->id;
+        Customers::where('id', $id)->delete();
+        return redirect()->route('customers')->with('success', 'Customer Deleted Successfully');
+    }
 }
