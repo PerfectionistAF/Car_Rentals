@@ -85,6 +85,13 @@
 										<li><a href="{{route('customers')}}">Customers List</a></li>
 									</ul>
 								</li>
+                <!---TASK 11 ADD POSTS---->
+                <li><a><i class="fa fa-desktop"></i> Posts <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="{{route('posts-create')}}">Add Post</a></li>
+										<li><a href="{{route('posts')}}">Posts List</a></li>
+									</ul>
+								</li>
 							</ul>
 						</div>
 
