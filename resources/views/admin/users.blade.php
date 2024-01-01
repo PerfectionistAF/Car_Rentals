@@ -1,8 +1,8 @@
 @extends('admin.layout')
 
-@section('content')
-@section('title', 'All Users')  <!--no end section since <title></title>-->
 
+@section('title', 'All Users')  <!--no end section since <title></title>-->
+@section('content')
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
@@ -63,86 +63,23 @@
 
 
                       <tbody>
+                      <?php
+                      $reg_date = "1 Jan 2023";
+                      $name = "Tony Adam";
+                      $username = "tony2023";
+                      $email = "tony@gmail.com";
+                      $active = "Yes";
+                      for($i=0; $i<=5; $i++){
+                      ?>
                         <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
+                          <td><?php echo $reg_date?></td>
+                          <td><?php echo $name?></td>
+                          <td><?php echo $username?></td>
+                          <td><?php echo $email?></td>
+                          <td><?php echo $active?></td>
+                          <td><a href="{{route('editUser.html')}}"><img src="{{asset('./images/edit.png')}}" alt="Edit"></a></td>
                         </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Tony Adam</td>
-                          <td>tony2023</td>
-                          <td>tony@gmail.com</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
-                        </tr>
+                      <?php }?>
                         
                       </tbody>
                     </table>

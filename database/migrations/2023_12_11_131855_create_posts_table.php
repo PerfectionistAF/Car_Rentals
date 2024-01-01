@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string("post_title", 50)->index("POST_INDEX"); //length 50 characters and set column to index
             $table->text("post_content");
             $table->date("post_date");
-            //$table->unsignedBigInteger("user_id");//column for foreign key
-            //$table->foreign("user_id")->references("id")->on("users")->onDelete("cascade")->onUpdate("cascade");
+            $table->unsignedBigInteger("user_id");//column for foreign key
+            $table->foreign("user_id")->references("id")->on("users");//->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();
         });
     }

@@ -60,17 +60,18 @@
 
 
                       <tbody>
+                      
+                      <?php
+                      $cat = "Category";
+                      for($i=0; $i<=5; $i++){
+                      ?>
                         <tr>
-                          <td>Category</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
+                          <td><?php echo $cat?></td>
+                          <td><a href="{{route('editCategory.html')}}"><img src="{{asset('./images/edit.png')}}" alt="Edit"></a></td>
                           <td><img src="{{asset('./images/delete.png')}}" alt="Delete"></td>
                         </tr>
-                        <tr>
-                          <td>Category</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
-                          <td><img src="{{asset('./images/delete.png')}}" alt="Delete"></td>
-                        </tr>
-                        
+                      <?php }?>
+
                       </tbody>
                     </table>
                   </div>

@@ -1,4 +1,4 @@
-@extends(admin.layout)
+@extends('admin.layout')
 
 @section('content')
 @section('title', 'All Photos')
@@ -62,28 +62,21 @@
 
 
                       <tbody>
+                      <?php
+                      $date = "1 Jan 2023";
+                      $title = "Title";
+                      $active = "Yes";
+                      for($i=0; $i<=5; $i++){
+                      ?>
                         <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Title</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
+                          <td><?php echo $date?></td>
+                          <td><?php echo $title?></td>
+                          <td><?php echo $active?></td>
+                          <td><a href="{{route('editPhoto.html')}}"><img src="{{asset('./images/edit.png')}}" alt="Edit"></a></td>
                           <td><img src="{{asset('./images/delete.png')}}" alt="Delete"></td>
                         </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Title</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
-                          <td><img src="{{asset('./images/delete.png')}}" alt="Delete"></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Title</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('./images/edit.png')}}" alt="Edit"></td>
-                          <td><img src="{{asset('./images/delete.png')}}" alt="Delete"></td>
-                        </tr>
-                        
+                      <?php }?>
+
                       </tbody>
                     </table>
                   </div>

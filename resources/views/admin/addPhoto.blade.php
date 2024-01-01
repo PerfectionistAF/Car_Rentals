@@ -1,4 +1,4 @@
-@extends(admin.layout)
+@extends('admin.layout')
 
 @section('content')
 @section('title', 'Add Photo')

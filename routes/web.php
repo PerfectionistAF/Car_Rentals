@@ -278,3 +278,71 @@ add show and delete operations in users controller
 */
 Route::get('users-show/{id}', [UserController::class , 'show'])->name('users-show');
 Route::get('users-delete/{id}', [UserController::class , 'delete']);
+////////TASK NINE UPDATED
+/*
+add all crud operations in posts controller
+*/
+Route::get('/posts',[PostsController::class, 'index'])->name('posts');
+Route::get('/posts-create',[PostsController::class, 'create'])->name('posts-create');
+Route::post('/posts-store',[PostsController::class, 'store'])->name('posts-store');
+Route::get('/posts-edit/{id}',[PostsController::class, 'edit'])->name('posts-edit');
+Route::post('/posts-update/{id}',[PostsController::class, 'update'])->name('posts-update');
+Route::get('/posts-show/{id}',[PostsController::class, 'show'])->name('posts-show');
+Route::get('/posts-delete/{id}',[PostsController::class, 'delete']);
+
+/////SESSION 10
+////////TASK TEN
+/*
+add all paths for admin views
+*/
+//USERS ROUTES AND VIEWS
+Route::prefix('USERS')->group(function(){
+    Route::get('/users-admin',function(){
+        return view('admin.users');
+    })->name('users.html');
+    
+    Route::get('/users-add',function(){
+        return view('admin.addUser');
+    })->name('addUser.html');
+    
+    Route::get('/users-edit',function(){
+        return view('admin.editUser');
+    })->name('editUser.html');
+});
+//CATEGORIES ROUTES AND VIEWS
+Route::prefix('CATEGORIES')->group(function(){
+    Route::get('/categories-admin',function(){
+        return view('admin.categories');
+    })->name('categories.html');
+    
+    Route::get('/categories-add',function(){
+        return view('admin.addCategory');
+    })->name('addCategory.html');
+
+    Route::get('/categories-edit',function(){
+        return view('admin.editCategory');
+    })->name('editCategory.html');
+});
+//PHOTOS ROUTES AND VIEWS
+Route::prefix('PHOTOS')->group(function(){
+    Route::get('/photos-admin',function(){
+        return view('admin.photos');
+    })->name('photos.html');
+    
+    Route::get('/photos-add',function(){
+        return view('admin.addPhoto');
+    })->name('addPhoto.html');
+
+    Route::get('/photos-edit',function(){
+        return view('admin.editPhoto');
+    })->name('editPhoto.html');
+});
+//LOGIN ROUTE
+Route::get('/login',function(){
+    return view('admin.login');
+})->name('login.html');  //if no layout file included, kept as is
+
+
+/////SESSION 11
+//check Customers route----SESSION 7
+//create subview to the view returned by each method in the controller

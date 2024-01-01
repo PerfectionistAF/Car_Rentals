@@ -1,22 +1,25 @@
-
-<!DOCTYPE html>
+<!---REMOVE THIS BLOCK AND EXTEND ADMIN LAYOUT INSTEAD--->
+<!--<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Customers</title>
+        <title>Customers</title>--->
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+        <!-- <link rel="preconnect" href="https://fonts.bunny.net"> -->
+        <!-- <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" /> -->
 
         <!-- Styles -->
         <!--<style>-->
-            <link rel="stylesheet" href="../css/form.css">
+        <!-- <link rel="stylesheet" href="../css/form.css">-->
         <!--</style>-->
-    </head>
-    <body>
+    <!---</head>-->
+    <!--<body>-->
+@extends('admin.layout')
+@section('title', 'All Customers')
+@section('content')
         <table border="2" style="margin: 10px;">
             <tr>
                 <th>Customer Name  </th>
@@ -59,6 +62,7 @@
         </table>
         <br>
         <a href="{{route('customers-create')}}"><button style="margin: 10px;"><h2 style="color:red">    ADD CUSTOMER</h2></button></a>
-    </body>
-<html>
+@endsection    
+    <!--</body>-->
+<!--<html>-->
 

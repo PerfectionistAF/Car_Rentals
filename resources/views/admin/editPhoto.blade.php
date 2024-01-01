@@ -1,14 +1,12 @@
 @extends('admin.layout')
-
+@section('title', 'Edit Photo')
 @section('content')
-@section('title', 'Add User') 
-
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>Manage Users</h3>
+							<h3>Manage Photos</h3>
 						</div>
 
 						<div class="title_right">
@@ -27,7 +25,7 @@
 						<div class="col-md-12 col-sm-12 ">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Add User</h2>
+									<h2>Edit Photo</h2>
 									<ul class="nav navbar-right panel_toolbox">
 										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 										</li>
@@ -48,25 +46,37 @@
 								<div class="x_content">
 									<br />
 									<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
 										<div class="item form-group">
-											<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Full Name <span class="required">*</span>
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="photo-date">Photo Date <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="first-name" required="required" class="form-control ">
+												<input type="date" id="photo-date" required="required" class="form-control ">
 											</div>
 										</div>
 										<div class="item form-group">
-											<label class="col-form-label col-md-3 col-sm-3 label-align" for="user-name">Username <span class="required">*</span>
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="title">Title <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="user-name" name="user-name" required="required" class="form-control">
+												<input type="text" id="title" required="required" class="form-control ">
 											</div>
 										</div>
 										<div class="item form-group">
-											<label for="email" class="col-form-label col-md-3 col-sm-3 label-align">Email <span class="required">*</span></label>
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="license">License <span class="required">*</span>
+											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input id="email" class="form-control" type="email" name="email" required="required">
+												<textarea id="content" name="license" required="required" class="form-control">License</textarea>
+											</div>
+										</div>
+										<div class="item form-group">
+											<label for="dimension" class="col-form-label col-md-3 col-sm-3 label-align">Dimension <span class="required">*</span></label>
+											<div class="col-md-6 col-sm-6 ">
+												<input id="dimension" class="form-control" type="text" name="dimension" required="required">
+											</div>
+										</div>
+										<div class="item form-group">
+											<label for="format" class="col-form-label col-md-3 col-sm-3 label-align">Format <span class="required">*</span></label>
+											<div class="col-md-6 col-sm-6 ">
+												<input id="format" class="form-control" type="text" name="format" required="required">
 											</div>
 										</div>
 										<div class="item form-group">
@@ -78,16 +88,28 @@
 											</div>
 										</div>
 										<div class="item form-group">
-											<label class="col-form-label col-md-3 col-sm-3 label-align" for="password">Password <span class="required">*</span>
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="image">Image <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="password" id="password" name="password" required="required" class="form-control">
+												<input type="file" id="image" name="image" required="required" class="form-control">
+											</div>
+										</div>
+
+										<div class="item form-group">
+											<label class="col-form-label col-md-3 col-sm-3 label-align" for="title">Tag <span class="required">*</span>
+											</label>
+											<div class="col-md-6 col-sm-6 ">
+												<select class="form-control" name="category" id="">
+													<option value=" ">Select Tag</option>
+													<option value="cat1">Category 1</option>
+													<option value="cat2">Category 2</option>
+												</select>
 											</div>
 										</div>
 										<div class="ln_solid"></div>
 										<div class="item form-group">
 											<div class="col-md-6 col-sm-6 offset-md-3">
-												<button class="btn btn-primary" type="button" onclick="window.location.href='{{route('users.html')}}'">Cancel</button>
+												<button class="btn btn-primary" type="button" onclick="window.location.href='{{route('photos.html')}}'">Cancel</button>
 												<button type="submit" class="btn btn-success">Add</button>
 											</div>
 										</div>
@@ -101,5 +123,4 @@
 				</div>
 			</div>
 			<!-- /page content -->
-			
 @endsection
