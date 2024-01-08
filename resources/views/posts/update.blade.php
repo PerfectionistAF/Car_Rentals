@@ -70,8 +70,8 @@
             <label class="col-form-label col-md-3 col-sm-3 label-align" for="post_content">Content<span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 ">
-                <textarea name="post_content" id="" cols="30" rows="10" value="{{$posts->post_content}}" required="required" class="form-control">
-                </textarea>
+                <input type="text" name="post_content" id="" cols="30" rows="10" value="{{$posts->post_content}}" required="required" class="form-control">
+                <!--</textarea>-->
                 <!--<input type="text" name="post_content" value="{{$posts->post_content}}"><br><br>-->
                 <!---names of fields in table-->
             </div>

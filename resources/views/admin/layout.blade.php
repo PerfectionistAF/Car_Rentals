@@ -81,7 +81,7 @@
                 <!---SESSION 11 ADD CUSTOMERS---->
                 <li><a><i class="fa fa-desktop"></i> Customers <span class="fa fa-chevron-down"></span></a>
 									<ul class="nav child_menu">
-										<li><a href="{{route('addPhoto.html')}}">Add Customer</a></li>
+										<li><a href="{{route('customers-create')}}">Add Customer</a></li>
 										<li><a href="{{route('customers')}}">Customers List</a></li>
 									</ul>
 								</li>

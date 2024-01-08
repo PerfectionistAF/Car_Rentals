@@ -2,18 +2,24 @@
 
 namespace App\Http\Controllers;
 use DB;
-use App\Models\Posts;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 
 class PostsController extends Controller
 {
+    //ONE TO MANY RELATIONS BETWEEN USER AND POSTS
+    public function user(){//user info
+        $users = Post::find(1)->user;
+        echo "<h1>Post by:</h1><br>";
+        echo $users->name;
+    }
     //select operation
     public function index(){
-        echo "<h1 style= font-size:30>Hello from Posts Controller</h1>";
-        echo "<br><br>";
-        $posts = Posts::all();
+        //echo "<h1 style= font-size:30>Hello from Posts Controller</h1>";
+        //echo "<br><br>";
+        $posts = Post::all();
         return view("posts.index", ["posts" => $posts]);
     }
     //insert operation p1
@@ -23,8 +29,8 @@ class PostsController extends Controller
     }
     //insert operation p2
     public function store(Request $request):RedirectResponse{
-        $posts = new Posts();
-        //DB::statement('SET FOREIGN_KEY_CHECKS=0'); //remove constraints on InnoDB foreign keys
+        $posts = new Post();
+        DB::statement('SET FOREIGN_KEY_CHECKS=0'); //remove constraints on InnoDB foreign keys
         $posts->post_title=$request->post_title;  ///$request->(name of the field in the insert form)
         $posts->post_content=$request->post_content;
         $posts->post_date= $request->post_date;
@@ -42,12 +48,12 @@ class PostsController extends Controller
     }
     //update operation p1
     public function edit(string $id){
-        $posts = Posts::findOrFail($id);
+        $posts = Post::findOrFail($id);
         return view('posts.update', ["posts" => $posts]);
     }
     //update operation p2
     public function update(Request $request, string $id):RedirectResponse{
-        Posts::where('id', $id)->update([
+        Post::where('id', $id)->update([
             //column name in db  => name from request
             'post_title'=>$request->post_title,
             'post_content'=>$request->post_content,
@@ -58,12 +64,12 @@ class PostsController extends Controller
     }
     //show operation
     public function show(string $id){
-        $post = Posts::findOrFail($id);
+        $post = Post::findOrFail($id);
         return view('posts.show', compact('post'));
     }
     //delete operation
     public function delete(Request $request, string $id):RedirectResponse{
-        $posts = Posts::findOrFail($id)->delete();
+        $posts = Post::findOrFail($id)->delete();
         return redirect()->route('posts')->with('success', 'Posts Deleted Successfully');
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Middleware\CheckAge;//use checkAge
 use App\Http\Middleware\CheckUser;//use checkAdmin
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -346,3 +347,44 @@ Route::get('/login',function(){
 /////SESSION 11
 //check Customers route----SESSION 7
 //create subview to the view returned by each method in the controller
+//copy html file and view
+//Customer controller index, insert, show, edit, delete
+//validate inputs for Customer
+
+////////TASK ELEVEN
+/*
+add all subviews for Post Controller
+*/
+
+/////SESSION 12
+Route::get('/users-phones/{id}', [UserController::class , 'phone_no'])->name('users-phones');
+////////TASK TWELVE
+/*
+ONE TO ONE
+EACH CUSTOMER HAS ONE PHONE NO
+check one to one relationship between entities
+*/
+
+/////SESSION 13
+//add a new migration to add column/rename/drop table without rollback
+//php artisan make:migration add_column_to_customer --table=customers
+//ONE TO MANY: EACH CUSTOMER HAS 1 ORDER
+//php artisan make:model Order --controller
+Route::get('/orders_customers', [OrderController::class , 'cust_orders']);//->name('users-phones');
+Route::get('/customers_orders', [OrderController::class , 'orders_cust']);//->name('users-phones');
+////////TASK THIRTEEN
+/*
+ONE TO MANY
+EACH USER HAS MANY POSTS
+*/
+Route::get('/posts_user', [PostsController::class , 'user']);
+Route::get('/user_posts', [UserController::class , 'posts']);
+
+////SESSION 14 
+//MANY TO MANY
+//ACCORDING TO CONSTRAINTS: USER HAS MANY ROLES, ROLE HAS MANY USERS
+//USE AN INTERMEDIATE TABLE: ROLE_USER
+//php artisan make:migration create_roles_table
+//php artisan make:migration create_role_user_table
+//php artisan make:model Role --controller
+Route::get('/user_roles', [UserController::class , 'roles']);

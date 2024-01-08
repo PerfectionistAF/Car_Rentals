@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text("order_description");
             $table->dateTime("order_date");
             $table->double("total_amount", 8, 2);
-            $table->unsignedBigInteger("customer_id");//column for foreign key
+            $table->unsignedBigInteger("customer_id");//->unique();//column for foreign key
             //method one for foreign key
             $table->foreign("customer_id")->references("id")->on("customers")->onDelete("cascade")->onUpdate("cascade");
             //method two for foreign key
