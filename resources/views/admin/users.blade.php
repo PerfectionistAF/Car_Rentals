@@ -52,36 +52,41 @@
                     <table id="datatable" class="table table-striped table-bordered" style="width:100%">
                       <thead>
                         <tr>
-                          <th>Registration Date</th>
                           <th>Name</th>
-                          <th>Username</th>
                           <th>Email</th>
-                          <th>Active</th>
+                          <th>Show Posts</th>
+                          <th>Delete</th>
                           <th>Edit</th>
                         </tr>
                       </thead>
 
 
                       <tbody>
+                      @foreach ($users as $val)
                       <?php
-                      $reg_date = "1 Jan 2023";
-                      $name = "Tony Adam";
-                      $username = "tony2023";
-                      $email = "tony@gmail.com";
-                      $active = "Yes";
-                      for($i=0; $i<=5; $i++){
+                      #$name = "Tony Adam";
+                      #$email = "tony@gmail.com";
+                      #$active = "Yes";
+                      #for($i=0; $i<=5; $i++){
                       ?>
                         <tr>
-                          <td><?php echo $reg_date?></td>
-                          <td><?php echo $name?></td>
-                          <td><?php echo $username?></td>
-                          <td><?php echo $email?></td>
-                          <td><?php echo $active?></td>
+                        <td> 
+                            {{$val->name}}
+                        </td>
+                        <td>
+                            {{$val->email}}
+                        </td>
+                        <td><!---retreive id to update customer then add routes to web.php--->
+                            <a href="/user_posts/{{$val->id}}" style="color:blue">Show Posts</a>
+                        </td>
+                        <td>
+                            <a href="/users-delete/{{$val->id}}" style="color:blue">Delete</a>
+                        </td>
                           <td><a href="{{route('editUser.html')}}"><img src="{{asset('./images/edit.png')}}" alt="Edit"></a></td>
                         </tr>
-                      <?php }?>
-                        
-                      </tbody>
+                        @endforeach
+                    
+                    </tbody>
                     </table>
                   </div>
                   </div>
@@ -94,10 +99,3 @@
         </div>
         <!-- /page content -->
 @endsection
-
-<!---FINISH REST OF ADMIN FILES
-HREF {{asset('')}} 
-SRC {{asset('')}}
-stylesheet in /public then ref as normal
-//add route and alias
---->

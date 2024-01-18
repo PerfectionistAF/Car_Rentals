@@ -23,10 +23,22 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
+    //authenticate new credentials
+    public function credentials(Request $request){
+        if(is_numeric($request->email_phone)){
+            return ['phone'=>$request->email_phone, 'password'=>$request->password];
+        }
+        else if(filter_var($request->email_phone, FILTER_VALIDATE_EMAIL)){
+            return ['email'=>$request->email_phone, 'password'=>$request->password];
+        }
+
+        $request->session()->regenerate();
+
+        return redirect()->intended(RouteServiceProvider::HOME);
+    }
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
 
         return redirect()->intended(RouteServiceProvider::HOME);

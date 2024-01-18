@@ -6,14 +6,17 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
     //ONE TO MANY RELATIONS BETWEEN USER AND POSTS
-    public function user(){//user info
-        $users = Post::find(1)->user;
-        echo "<h1>Post by:</h1><br>";
-        echo $users->name;
+    public function user(string $id){//user info
+        $user_info = Post::findOrFail($id)->user;
+        return view("admin.user_info", compact('user_info'));
+        /*echo "<h1>Post by:</h1><br>";
+        echo "<h1>$users->name</h1><br>";
+        echo "<h1>_____________________________________________________________</h1>";*/
     }
     //select operation
     public function index(){
@@ -34,9 +37,12 @@ class PostsController extends Controller
         $posts->post_title=$request->post_title;  ///$request->(name of the field in the insert form)
         $posts->post_content=$request->post_content;
         $posts->post_date= $request->post_date;
-        $exists = DB::table("users")->get()->where('id', $request->user_id);
-        if($exists){
-            $posts->user_id = $request->user_id;
+        //$exists = DB::table("users")->get()->where('id', $request->user_id);
+        $exists=Auth::id(); //dynmaic user id of the user we just login
+        //Auth::user() //all user info
+        if($exists > 0){
+            //$posts->user_id = $request->user_id;
+            $posts->user_id = Auth::id();
         }
         else{
             (String) $request->user_id = "unset";

@@ -1,14 +1,12 @@
-<!---REMOVE HTML BLOCK AND EXTEND ADMIN LAYOUT INSTEAD--->
-
 @extends('admin.layout')
-@section('title', 'All Customers')
+@section('title', 'Show User Posts')
 @section('content')
-        <!-- page content -->
+<!-- page content -->
         <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Manage <small>Customers</small></h3>
+                <h3>Show <small>User Posts</small></h3>
               </div>
 
               <div class="title_right">
@@ -28,8 +26,9 @@
             <div class="row">
               <div class="col-md-12 col-sm-12 ">
                 <div class="x_panel">
+				
                   <div class="x_title">
-                    <h2>List of Customers</h2>
+                    <h2>List {{$name->name}} Posts</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -50,47 +49,41 @@
                           <div class="col-sm-12">
                             <div class="card-box table-responsive">
                     <table id="datatable" class="table table-striped table-bordered" style="width:100%">
-                    <thead>
-                    <tr>
-                        <th>Customer Name</th>
-                        <th>Customer Email</th>
-                        <th>Edit</th>
-                        <th>Show</th>
-                        <th>Delete</th>
-                    </tr>
-                    </thead>
-                        <tbody>
+                      <thead>
+                        <tr>
+                          <th>Post Title</th>
+                          <th>Post Content</th>
+                          <th>Show</th>
+                          <th>Delete</th>
+                          <th>Edit</th>
+                        </tr>
+                      </thead>
 
-                    @foreach ($customers as $val)
-                    
-                    <tr>
+
+                      <tbody>
+                      @foreach ($user_posts as $val)
+                      <?php
+                      #$name = "Tony Adam";
+                      #$email = "tony@gmail.com";
+                      #$active = "Yes";
+                      #for($i=0; $i<=5; $i++){
+                      ?>
+                        <tr>
                         <td> 
-                            {{$val->customer_name}}
+                            {{$val->post_title}}
                         </td>
                         <td>
-                            {{$val->email}}
+                            {{$val->post_content}}
                         </td>
                         <td><!---retreive id to update customer then add routes to web.php--->
-                            <a href="/customers-edit/{{$val->id}}">
-                                <img src="{{asset('./images/edit.png')}}" alt="Edit">
-                            </a>
-                        </td>
-                        <td><!---retreive id to update customer then add routes to web.php--->
-                            <a href="/customers-show/{{$val->id}}" style="color:blue">Show</a>
+                            <a href="/posts-show/{{$val->id}}" style="color:blue">Details</a>
                         </td>
                         <td>
-                            <a href="/customers-delete/{{$val->id}}" style="color:blue">Delete</a>
+                            <a href="/posts-delete/{{$val->id}}" style="color:blue">Delete</a>
                         </td>
-                        <td>
-                            <form action="{{route('customers-delete', [$val->id])}}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <input type="hidden" name="id" value="{{$val->id}}">
-                                <input type="submit" value="Delete Customer">
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
+                          <td><a href="{{route('editUser.html')}}"><img src="{{asset('./images/edit.png')}}" alt="Edit"></a></td>
+                        </tr>
+                        @endforeach
                     
                     </tbody>
                     </table>
@@ -105,11 +98,3 @@
         </div>
         <!-- /page content -->
 @endsection
-
-        <!--</table>
-        <br>
-        <a href="{{route('customers-create')}}"><button style="margin: 10px;"><h2 style="color:red">    ADD CUSTOMER</h2></button></a>--->
-   
-    <!--</body>-->
-<!--<html>-->
-

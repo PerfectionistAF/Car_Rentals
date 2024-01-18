@@ -6,6 +6,7 @@ use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -51,6 +52,15 @@ class LoginRequest extends FormRequest
 
         RateLimiter::clear($this->throttleKey());
     }
+    /*authenticate new credentials
+    public function credentials(Request $request){
+        if(is_numeric($request->email_phone)){
+            return ['phone'=>$request->email_phone, 'password'=>$request->password];
+        }
+        else if(filter_var($request->email_phone, FILTER_VALIDATE_EMAIL)){
+            return ['email'=>$request->email_phone, 'password'=>$request->password];
+        }
+    }*/
 
     /**
      * Ensure the login request is not rate limited.

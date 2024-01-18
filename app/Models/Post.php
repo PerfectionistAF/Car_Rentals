@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Post extends Model
 {
-    //use HasFactory;
+    use HasFactory;
     protected $table = "posts";
     //several posts belong to 1 user
     public function user():BelongsTo{

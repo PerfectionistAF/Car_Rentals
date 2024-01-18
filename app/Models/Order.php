@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Order extends Model
 {
-    //use HasFactory;
+    use HasFactory;
     protected $table = "orders";
     public function customer():BelongsTo{
         return $this->belongsTo(Customer::class);

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\ProfileController; //use the class ProfileController
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CollectiveViewController;//task 4
 use App\Http\Controllers\PostsController;//task 7
@@ -36,7 +38,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
+////SESSION 16---V IMP
+Auth::routes(['verify'=>true]);
+////V IMP---NEVER AFTER REQUIRE__DIR__
 require __DIR__.'/auth.php';
 
 //test
@@ -283,8 +287,10 @@ Route::get('users-delete/{id}', [UserController::class , 'delete']);
 /*
 add all crud operations in posts controller
 */
-Route::get('/posts',[PostsController::class, 'index'])->name('posts');
-Route::get('/posts-create',[PostsController::class, 'create'])->name('posts-create');
+Route::get('/posts',[PostsController::class, 'index'])->name('posts')->middleware('verified');
+////SESSION 16 ONLY AUTH USERS CAN ADD NEW POSTS
+Route::get('/posts-create',[PostsController::class, 'create'])->name('posts-create')->middleware('auth');
+
 Route::post('/posts-store',[PostsController::class, 'store'])->name('posts-store');
 Route::get('/posts-edit/{id}',[PostsController::class, 'edit'])->name('posts-edit');
 Route::post('/posts-update/{id}',[PostsController::class, 'update'])->name('posts-update');
@@ -298,18 +304,22 @@ add all paths for admin views
 */
 //USERS ROUTES AND VIEWS
 Route::prefix('USERS')->group(function(){
-    Route::get('/users-admin',function(){
-        return view('admin.users');
-    })->name('users.html');
-    
+    Route::get('/users-admin', [UserController::class , 'index'])->name('users.html')->middleware('auth'); //ONLY CONTROL USERS IF YOU CAN LOG INTO LARAVEL
+
+    //Route::get('/users-admin',function(){
+    //    return view('admin.users');
+    //})->name('users.html');
+    Route::delete('users-delete/{id}', [UserController::class , 'destroy'])->name('users-delete')->middleware('auth'); //ONLY CONTROL USERS IF YOU CAN LOG INTO LARAVEL
+
     Route::get('/users-add',function(){
         return view('admin.addUser');
-    })->name('addUser.html');
+    })->name('addUser.html')->middleware('auth'); //ONLY CONTROL USERS IF YOU CAN LOG INTO LARAVEL
     
     Route::get('/users-edit',function(){
         return view('admin.editUser');
-    })->name('editUser.html');
+    })->name('editUser.html')->middleware('auth'); //ONLY CONTROL USERS IF YOU CAN LOG INTO LARAVEL
 });
+
 //CATEGORIES ROUTES AND VIEWS
 Route::prefix('CATEGORIES')->group(function(){
     Route::get('/categories-admin',function(){
@@ -339,7 +349,7 @@ Route::prefix('PHOTOS')->group(function(){
     })->name('editPhoto.html');
 });
 //LOGIN ROUTE
-Route::get('/login',function(){
+Route::get('/signin',function(){
     return view('admin.login');
 })->name('login.html');  //if no layout file included, kept as is
 
@@ -377,8 +387,8 @@ Route::get('/customers_orders', [OrderController::class , 'orders_cust']);//->na
 ONE TO MANY
 EACH USER HAS MANY POSTS
 */
-Route::get('/posts_user', [PostsController::class , 'user']);
-Route::get('/user_posts', [UserController::class , 'posts']);
+Route::get('/posts_user/{id}', [PostsController::class , 'user'])->name('post-user-info');
+Route::get('/user_posts/{id}', [UserController::class , 'posts'])->name('user-post-info');
 
 ////SESSION 14 
 //MANY TO MANY
@@ -388,3 +398,49 @@ Route::get('/user_posts', [UserController::class , 'posts']);
 //php artisan make:migration create_role_user_table
 //php artisan make:model Role --controller
 Route::get('/user_roles', [UserController::class , 'roles']);
+
+////////TASK FOURTEEN
+Route::get('/posts_user/{id}', [PostsController::class , 'user'])->name('post-user-info');
+Route::get('/user_posts/{id}', [UserController::class , 'posts'])->name('user-post-info');
+
+////SESSION 15
+//seeder test
+//php artisan make:seeder UserSeeder //manually add data
+//php artisan db:seed --class=UserSeeder //test
+//generate Factory
+//php artisan make:factory CustomerFactory //automatcally adds data
+//relations between models, use magic methods
+//get inverse
+
+////////TASK FIFTEEN
+//seeding m:1 posts:user
+//factory cannot work without seeder, opposite is ok
+
+////SESSION 16
+
+//Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+
+//check npm run dev or npm install or npm run watch
+//check post route and add a new post for logged in laravel
+//LOG OUT FROM LARAVEL FIRST NOT FROM ADMIN
+//middleware('auth') doesn't work on prefix
+//add column and check whether or not it's an admin
+
+//USE MAILHOG TO CONFIRM USER CREDS---SMTP
+//.env file to add settings for mailhog:::port number 8025
+//User.php Model------extends Authenticatable implements MustVerifyEmail
+//check Auth::routes()
+
+//can't access posts unless verified, middleware('verified')
+//papaya
+//pp@example.com
+//12345678910
+//ALL MIDDLEWARES HERE: app\Http\Kernel.php
+//App\Providers\RouteServiceProvider ///check HOME
+//VALIDATE IN CUSTOMER VS IN USER
+
+//login from phone number
+
+////////TASK SIXTEEN
+//SCREENSHOT PAST VERIFICATION OF REGISTER
+//VERIFY PHONE NUMBER WHEN LOGIN

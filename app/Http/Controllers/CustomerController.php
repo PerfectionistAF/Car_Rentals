@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Models\Customers;
+use App\Models\Customer;
 
 class CustomerController extends Controller
 {
@@ -15,8 +15,8 @@ class CustomerController extends Controller
         //echo "<h1 style= font-size:30>Hello from Customer Controller</h1>";
         //echo "<br><br>";
         //$custs = DB::table("customers")->get();   //select * from customers
-        $custss = Customers::get();//get data from model
-        $custs = Customers::all();//get all data from model
+        $custss = Customer::get();//get data from model
+        $custs = Customer::all();//get all data from model
         return view("customers.index", ["customers" => $custs]);
         /*foreach($custs as $val){
             echo $val->customer_name . " " . $val->email . "<br>";
@@ -48,21 +48,21 @@ class CustomerController extends Controller
             'customer_email'=> 'Error: Email is required'
         ]);
 
-        $customer = new Customers();
+        $customer = new Customer();
         $customer->customer_name=$request->customer_name;  ///$request->(name of the field in the insert form)
         $customer->email=$request->customer_email;
         $customer->save();
 
         //return response("New Customer Added Successfully");//WITHOUT REDIRECT RESPONSE
         //return redirect('/customers');
-        return redirect()->route('customers')->with('success', 'Customer Added Successfully');
+        return redirect()->route('customers-create')->with('success', 'Customer Added Successfully');
     }
     public function edit(string $id){//take id as string from route
-        $customer = Customers::findOrFail($id);//check if id is present
+        $customer = Customer::findOrFail($id);//check if id is present
         return view('customers.update', ["customers" => $customer]);
     }
     public function update(Request $request, string $id):RedirectResponse{
-        Customers::where('id', $id)->update([
+        Customer::where('id', $id)->update([
             //column name in db  => name from request
             'customer_name'=>$request->customer_name,
             'email'=>$request->customer_email
@@ -75,16 +75,16 @@ class CustomerController extends Controller
     }
     //show details----SESSION 9
     public function show(string $id){
-        $customer = Customers::findOrFail($id);
+        $customer = Customer::findOrFail($id);
         return view('customers.show', compact('customer'));
     }
     public function delete(Request $request, string $id):RedirectResponse{
-        $customers = Customers::findOrFail($id)->delete();
+        $customers = Customer::findOrFail($id)->delete();
         return redirect()->route('customers')->with('success', 'Customer Deleted Successfully');
     }
     public function destroy(Request $request):RedirectResponse{
         $id=$request->id;
-        Customers::where('id', $id)->delete();
+        Customer::where('id', $id)->delete();
         return redirect()->route('customers')->with('success', 'Customer Deleted Successfully');
     }
 }

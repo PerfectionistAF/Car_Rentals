@@ -55,7 +55,7 @@
                         <th>Post Content</th>
                         <th>Post Date</th>
                         <th>Edit</th>
-                        <th>Show</th>
+                        <th>Show User</th>
                         <th>Delete</th>
                     </tr>
                     </thead>
@@ -73,7 +73,7 @@
                             </a>
                         </td>
                         <td>
-                            <a href="/posts-show/{{$val->id}}" style="color:blue">Show</a>
+                            <a href="/posts_user/{{$val->id}}" style="color:blue">Show User</a>
                         </td>
                         <td><a href="/posts-delete/{{$val->id}}">
                                 <img src="{{asset('./images/delete.png')}}" alt="Delete">

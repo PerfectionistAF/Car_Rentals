@@ -29,12 +29,15 @@ class UserController extends Controller
         }   
     }
     //ONE TO MANY RELATIONS BETWEEN USER AND POSTS
-    public function posts(){//gte posts info
-        $user_posts = User::find(1)->posts;
-        foreach($user_posts as $posts){
-            echo "<h1>$posts->post_title</h1><br>";
+    public function posts(string $id){//gte posts info
+        $user_posts = User::findOrFail($id)->posts;
+        $name = User::findOrFail($id);
+        return view("admin.user_posts", compact('user_posts', 'name'));
+        /*foreach($user_posts as $posts){
+            echo "<h1>Post Title: $posts->post_title</h1><br>";
             echo "<h2>$posts->post_content</h2><br>";
-        }
+            echo "<h1>_____________________________________________________________</h1>";
+        }*/
     }
     //ONE TO ONE RELATIONS BETWEEN USER AND PHONE
     public function phone_no(string $id){
@@ -47,10 +50,10 @@ class UserController extends Controller
     }
     //select operation
     public function index(){
-        echo "<h1 style= font-size:30>Hello from User Controller</h1>";
-        echo "<br><br>";
+        //echo "<h1 style= font-size:30>Hello from User Controller</h1>";
+        //echo "<br><br>";
         $users = User::all();
-        return view("user.index", ["users" => $users]);//view, merge data
+        return view("admin.users", ["users" => $users]);//view, merge data
     }
     //insert operation p1
     public function create(){
