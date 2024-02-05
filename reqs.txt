@@ -1,0 +1,26 @@
+inside admin
+--------
+DONE
+--------------------------------------
+1- create registration and login system for admins with email verification.
+2- login/register by login for admins only
+3- show the full name of the user at the top right and top left of the admin panel on all pages.
+4- show users details in users.
+5- if we press edit, we can display user data and update it from edituser
+6- directly add user from addUser
+--------------------------------------
+7- add categories for the cars from addCategory
+8- show categories list on categories page
+9- if we press delete we can remove the category only if it has no data in the beverages table.
+10- edit the category if we press edit using editCategory.
+11- control beverages (add - edit - delete)
+12- show the messsages that we received from contact form.
+13- show count of the unread messages at top right.
+
+
+main website
+--------
+1- inside home page display the last 3 categories only, and show products of each category if we click the category name.
+2- About page with fixed content.
+3- special items page, from DB for special products only.
+4- Contact page to send email to the owner of the website with the message details, and save the data to the DB to check from admin.
