@@ -34,6 +34,27 @@
                     {{ Session::get('login_success') }}
                   </div>
                   @endif
+                  @if(Session::has('added_success'))
+                  <div class="alert alert-success">
+                      {{Session::get('added_success')}}
+                      @php
+                      Session::forget('added_success')
+                      @endphp</div>
+                  @endif
+                  @if(Session::has('edited_success'))
+                  <div class="alert alert-success">
+                      {{Session::get('edited_success')}}
+                      @php
+                      Session::forget('edited_success')
+                      @endphp</div>
+                  @endif
+                  @if(Session::has('deleted_success'))
+                  <div class="alert alert-success">
+                      {{Session::get('deleted_success')}}
+                      @php
+                      Session::forget('deleted_success')
+                      @endphp</div>
+                  @endif
                     <h2>List of Users</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -52,6 +73,11 @@
                   </div>
                   <div class="x_content">
                       <div class="row">
+                      @if(Session::has('admin_error'))
+                      <div class="alert alert-danger" role="alert">
+                      {{ Session::get('admin_error') }}
+                      </div>
+                      @endif
                           <div class="col-sm-12">
                             <div class="card-box table-responsive">
                     <table id="datatable" class="table table-striped table-bordered" style="width:100%">
@@ -81,9 +107,14 @@
                             {{$val->email}}
                         </td>
                         <td>
-                            <a href="/users-delete/{{$val->id}}" style="color:blue">Delete</a>
+                          <form action="{{route('users-delete', [$val->id])}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="id" value="{{$val->id}}">
+                                <input type="submit" value="Delete">
+                          </form>
                         </td>
-                          <td><a href="{{route('editUser.html')}}"><img src="{{asset('./images/edit.png')}}" alt="Edit"></a></td>
+                          <td><a href="{{route('editUser.html', [$val->id])}}"><img src="{{asset('./images/edit.png')}}" alt="Edit"></a></td>
                         </tr>
                         @endforeach
                     

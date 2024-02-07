@@ -55,7 +55,8 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $string = 'Login Success';
             $data = Auth::user()->username;
-            return redirect()->route('users.html')->with(['login_success', $string, 'data' => $data]);
+            session()->put(['data' => $data]);
+            return redirect()->route('users.html')->with('login_success', $string);
         }
 
         return redirect()->route('registerview')->with('login_error', 'Error Email or Password');
@@ -64,7 +65,7 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
- 
+        session()->flush(); //clear session
         return redirect()->route('login');
     }
     /*

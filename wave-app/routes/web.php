@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\Administrate;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ Route::get('/mainpage', function () {
 //EMAIL VERIFICATION MODULE: MAILTRACK.IO----EMAIL TESTING NOT WORKING 
 Auth::routes(['verify'=>true]);
 
-//admin page upon login//USED FOR LOG OUT HREF
+//admin page upon login//USED FOR LOG OUT HREF SINCE POST/DELETE DON'T WORK
 Route::get('/login', function () {
     return view('admin.login');
 })->name('loginform');//app/http/middleware/authenticate
@@ -49,16 +50,17 @@ Route::post('/loginsave', [LoginController::class, 'login'])->name('login');//->
 //USERS ROUTES AND VIEWS
 Route::prefix('USERS')->group(function(){
     //test if not authenticated, go to route('login'), else go to view in index
-    Route::get('/users-admin', [UserController::class , 'index'])->name('users.html')->middleware('auth'); //ONLY CONTROL USERS IF LOG IN
+    //ONLY CONTROL USERS IF LOG IN AND IF YOUR USERNAME IS ADMIN, ADMIN1, ADMIN2...ETC
+    Route::get('/users-admin', [UserController::class , 'index'])->name('users.html')->middleware('auth'); 
 
-    Route::get('/users-addview', [UserController::class, 'create'])->name('addUser.html')->middleware('auth');
-    Route::post('/users-addsave', [UserController::class, 'store'])->name('saveNew.html')->middleware('auth');
+    Route::get('/users-addview', [UserController::class, 'create'])->name('addUser.html')->middleware(['auth', 'admin']);
+    Route::post('/users-addsave', [UserController::class, 'store'])->name('saveNew');
 
-    Route::delete('users-delete/{id}', [UserController::class , 'destroy'])->name('users-delete'); //ONLY CONTROL USERS IF YOU CAN LOG IN
-    
-    Route::get('/users-edit',function(){
-        return view('admin.editUser');
-    })->name('editUser.html')->middleware('auth'); //ONLY CONTROL USERS IF YOU CAN LOG IN
+    Route::delete('/users-delete/{id}', [UserController::class , 'destroy'])->name('users-delete')->middleware(['auth', 'admin']);
+
+    Route::get('/users-editview/{id}', [UserController::class, 'edit'])->name('editUser.html')->middleware(['auth', 'admin']);
+    Route::post('/users-editsave/{id}', [UserController::class, 'update'])->name('saveEdit');
+
 });
 
 //CATEGORY CONTROLLER
@@ -68,7 +70,11 @@ Route::prefix('CATEGORIES')->group(function(){
 
 });
 
+
 //BEVERAGES ROUTES AND VIEWS
 Route::prefix('BEVERAGES')->group(function(){
 
 });
+
+
+//MESSAGES CONTROLLER
