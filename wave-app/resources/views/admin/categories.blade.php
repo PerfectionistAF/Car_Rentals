@@ -1,14 +1,14 @@
 @extends('admin.layout')
 
 
-@section('title', 'All Users')  
+@section('title', 'All Categories') 
 @section('content')
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Manage <small>Users</small></h3>
+                <h3>Manage Categories</h3>
               </div>
 
               <div class="title_right">
@@ -55,7 +55,7 @@
                       Session::forget('deleted_success')
                       @endphp</div>
                   @endif
-                    <h2>List of Users</h2>
+                    <h2>List of Categories</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -83,42 +83,44 @@
                     <table id="datatable" class="table table-striped table-bordered" style="width:100%">
                       <thead>
                         <tr>
-                          <th>Name</th>
-                          <th>Email</th>
-                          <th>Delete</th>
+                          <th>Category Name</th>
                           <th>Edit</th>
+                          <th>Delete</th>
                         </tr>
                       </thead>
 
 
                       <tbody>
-                      @foreach ($users as $val)
-                      <?php
-                      #$name = "Tony Adam";
-                      #$email = "tony@gmail.com";
-                      #$active = "Yes";
-                      #for($i=0; $i<=5; $i++){
-                      ?>
+                      @foreach ($categories as $val)
                         <tr>
-                        <td> 
-                            {{$val->fullname}}
-                        </td>
-                        <td>
-                            {{$val->email}}
-                        </td>
-                        <td>
-                          <form action="{{route('users-delete', [$val->id])}}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <input type="hidden" name="id" value="{{$val->id}}">
-                                <input type="submit" value="Delete">
-                          </form>
-                        </td>
-                          <td><a href="{{route('editUser.html', [$val->id])}}"><img src="{{asset('./images/edit.png')}}" alt="Edit"></a></td>
+                          <td> 
+                              {{$val->category}}
+                          </td>
+                          <td>
+                          <a href="{{route('editCategory.html', [$val->id])}}"><img src="{{asset('./images/edit.png')}}" alt="Edit"></a>
+                          </td>
+                          <td>
+                            <form action="{{route('categories-delete', [$val->id])}}" method="post">
+                                  @csrf
+                                  @method('DELETE')
+                                  <input type="hidden" name="id" value="{{$val->id}}">
+                                  <input type="submit" value="Delete">
+                            </form>
+                          </td>
+                        
                         </tr>
                         @endforeach
-                    
-                    </tbody>
+                        <!--<tr>
+                          <td>Category</td>
+                          <td><img src="./images/edit.png" alt="Edit"></td>
+                          <td><img src="./images/delete.png" alt="Delete"></td>
+                        </tr>
+                        <tr>
+                          <td>Category</td>
+                          <td><img src="./images/edit.png" alt="Edit"></td>
+                          <td><img src="./images/delete.png" alt="Delete"></td>
+                        </tr>-->
+                      </tbody>
                     </table>
                   </div>
                   </div>
@@ -130,4 +132,5 @@
           </div>
         </div>
         <!-- /page content -->
+
 @endsection

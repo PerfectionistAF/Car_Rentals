@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\Administrate;
@@ -67,7 +68,15 @@ Route::prefix('USERS')->group(function(){
 //CATEGORY MODEL 1:MANY
 //CATEGORIES ROUTES AND VIEWS
 Route::prefix('CATEGORIES')->group(function(){
+    Route::get('/categories-admin', [CategoryController::class , 'index'])->name('categories.html')->middleware('auth'); 
 
+    Route::get('/categories-addview', [CategoryController::class, 'create'])->name('addCategory.html')->middleware(['auth', 'admin']);
+    Route::post('/categories-addsave', [CategoryController::class, 'store'])->name('saveNewCategory');
+
+    Route::delete('/categories-delete/{id}', [CategoryController::class , 'destroy'])->name('categories-delete')->middleware(['auth', 'admin']);
+
+    Route::get('/categories-editview/{id}', [CategoryController::class, 'edit'])->name('editCategory.html')->middleware(['auth', 'admin']);
+    Route::post('/categories-editsave/{id}', [CategoryController::class, 'update'])->name('saveEditCategory');
 });
 
 
