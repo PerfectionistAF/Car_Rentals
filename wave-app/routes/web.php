@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\BeverageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
@@ -64,8 +65,9 @@ Route::prefix('USERS')->group(function(){
 
 });
 
-//CATEGORY CONTROLLER
 //CATEGORY MODEL 1:MANY
+//1 CATEGORY HAS MANY BEVERAGES
+//FIRST FOCUS ON RELATIONSHIP THEN ADD IMAGES
 //CATEGORIES ROUTES AND VIEWS
 Route::prefix('CATEGORIES')->group(function(){
     Route::get('/categories-admin', [CategoryController::class , 'index'])->name('categories.html')->middleware('auth'); 
@@ -82,6 +84,10 @@ Route::prefix('CATEGORIES')->group(function(){
 
 //BEVERAGES ROUTES AND VIEWS
 Route::prefix('BEVERAGES')->group(function(){
+    Route::get('/beverages-admin', [BeverageController::class , 'index'])->name('beverages.html')->middleware('auth'); 
+
+    Route::get('/beverages-addview', [BeverageController::class, 'create'])->name('addBeverage.html')->middleware(['auth', 'admin']);
+    Route::post('/beverages-addsave', [BeverageController::class, 'store'])->name('saveNewBeverage');
 
 });
 

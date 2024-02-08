@@ -71,6 +71,12 @@
 										<li><a href="{{route('addCategory.html')}}">Add Category</a></li>
 									</ul>
 								</li>
+                <li><a><i class="fa fa-users"></i> Beverages <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="{{route('beverages.html')}}">Beverages List</a></li>
+										<li><a href="{{route('addBeverage.html')}}">Add Beverage</a></li>
+									</ul>
+								</li>
 							</ul>
 						</div>
 
