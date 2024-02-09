@@ -1,14 +1,11 @@
 inside admin
 --------
-DONE
---------------------------------------
 1- create registration and login system for admins with email verification.
 2- login/register by login for admins only
 3- show the full name of the user at the top right and top left of the admin panel on all pages.
 4- show users details in users.
 5- if we press edit, we can display user data and update it from edituser
 6- directly add user from addUser
---------------------------------------
 7- add categories for the cars from addCategory
 8- show categories list on categories page
 9- if we press delete we can remove the category only if it has no data in the beverages table.

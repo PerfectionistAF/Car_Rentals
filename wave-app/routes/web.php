@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BeverageController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
@@ -22,8 +23,9 @@ use App\Http\Middleware\Administrate;
 
 //main website
 Route::get('/mainpage', function () {
-    return view('index');
+    return view('mainpage.index');
 });
+
 //EMAIL VERIFICATION MODULE: MAILTRACK.IO----EMAIL TESTING NOT WORKING 
 Auth::routes(['verify'=>true]);
 
@@ -98,4 +100,13 @@ Route::prefix('BEVERAGES')->group(function(){
 });
 
 
-//MESSAGES CONTROLLER
+//MESSAGES ROUTES AND VIEWS
+Route::prefix('MESSAGES')->group(function(){
+    Route::get('/messages-admin', [MessageController::class , 'index'])->name('messages.html')->middleware(['auth', 'admin']);
+
+    Route::delete('/messages-delete/{id}', [MessageController::class , 'destroy'])->name('messages-delete')->middleware(['auth', 'admin']); 
+});
+
+//MAIN PAGE VIEWS AND ROUTES
+Route::get('/mainpage-contactus', [MessageController::class, 'create'])->name('contactus');
+Route::post('/mainpage-addsave', [MessageController::class, 'store'])->name('sendmessage');

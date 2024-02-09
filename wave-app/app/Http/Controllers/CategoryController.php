@@ -34,35 +34,42 @@ class CategoryController extends Controller
         return redirect()->route('categories.html')->with('added_success', 'Category Added Successfully');
     }
     //delete Category operation
-    public function destroy(Request $request):RedirectResponse{
-        $cat_bev = Beverage::where('item_category', $request->input('category'))->count();
+    public function destroy(Request $request){//:RedirectResponse{
         $id=$request->id;
-        //find count of beverages in this category
-        //$cat_bev = Category::find($category)->beverages;
-        if($cat_bev == 0){ //has no data
+        $category = Category::where('id', $id)->pluck('category');  //["Hearty Soups"]
+        $category = $category[0]; //output of type array, so always get first element
+        $cat = Beverage::where('item_category', $category);//retreive models in Beverage that have the same category as request
+        //dd($category);
+        //echo $category;
+        //echo $cat->count();
+        //check count to see if there's data or not
+        if($cat->count() > 0){ //there's data in the model don't delete
+            return redirect()->route('categories.html')->with('deleted_error', 'Category Contains Data, Delete Failed');
+        }
+        else{
             Category::where('id', $id)->delete();
             return redirect()->route('categories.html')->with('deleted_success', 'Category Deleted Successfully');
         }
-        else{
-            return redirect()->route('categories.html')->with('deleted_error', 'Category Contains Data, Delete Failed');
-        }
     }
-    //show all beverages of this category////ERROR
+    //////////////////////////////////ERROR//////////////////////////////////
+    //show all beverages of this category
     public function cat_beverages(){
+        /*$category = Category::find(7); // Retrieve a category by its ID ///not working
+        $beverages = $category->beverages;
+        foreach($beverages as $row){
+            echo $row->title . ":" . $row->item_category;
+            echo "<br>";
+        }*/
         $name = "Hot Drinks";
-        $category = Category::where('category', $name)->first();
-        if ($category) {
-            $beverages = $category->beverages;
-            foreach($beverages as $row){
+        $cat = Beverage::where('item_category', $name);//retreive first model
+        echo $cat->count();
+        //$beverages = $cat->beverages;
+            foreach($cat as $row){
                 echo $row->title . ":" . $row->item_category;
                 echo "<br>";
             }
-        }
-        //$beverages = $category->beverages;
-        else{
-            echo "Not found";
-        }
     }
+    //////////////////////////////////ERROR//////////////////////////////////
     //edit Category operation p1
     public function edit(string $id){
         $categories = Category::findOrFail($id);

@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class BeverageController extends Controller
 {
+    //special beverages
+    public function special(){
+        $beverages = Beverage::all();
+        return view("mainpage.index", ["beverages" => $beverages]);//view, merge data
+    }
     //all beverages
     public function index(){
         $beverages = Beverage::all();
@@ -39,13 +44,13 @@ class BeverageController extends Controller
             'item_category' => $request->get('item_category'),//foreign key
             'image' => $imageName,
         ]);
-        if($beverages->published === 'on'){
+        if($beverages->published){
             $beverages->published = 1;
         }
         else{
             $beverages->published = 0;
         }
-        if($beverages->special === 'on'){
+        if($beverages->special){
             $beverages->special = 1;
         }
         else{

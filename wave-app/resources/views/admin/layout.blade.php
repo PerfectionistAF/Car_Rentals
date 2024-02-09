@@ -77,6 +77,11 @@
 										<li><a href="{{route('addBeverage.html')}}">Add Beverage</a></li>
 									</ul>
 								</li>
+                <li><a><i class="fa fa-users"></i> Messages <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="{{route('messages.html')}}">Messages List</a></li>
+									</ul>
+								</li>
 							</ul>
 						</div>
 
