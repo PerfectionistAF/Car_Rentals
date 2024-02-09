@@ -41,6 +41,20 @@
                       Session::forget('added_success')
                       @endphp</div>
                   @endif
+                  @if(Session::has('deleted_success'))
+                  <div class="alert alert-success">
+                      {{Session::get('deleted_success')}}
+                      @php
+                      Session::forget('deleted_success')
+                      @endphp</div>
+                  @endif
+                  @if(Session::has('edited_success'))
+                  <div class="alert alert-success">
+                      {{Session::get('edited_success')}}
+                      @php
+                      Session::forget('edited_success')
+                      @endphp</div>
+                  @endif
                     <h2>List of Beverages</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -59,6 +73,11 @@
                   </div>
                   <div class="x_content">
                       <div class="row">
+                      @if(Session::has('admin_error'))
+                      <div class="alert alert-danger" role="alert">
+                      {{ Session::get('admin_error') }}
+                      </div>
+                      @endif
                           <div class="col-sm-12">
                             <div class="card-box table-responsive">
                     <table id="datatable" class="table table-striped table-bordered" style="width:100%">
@@ -68,8 +87,8 @@
                           <th>Title</th>
                           <th>Published</th>
                           <th>Special</th>
-                          <!--<th>Edit</th>-->
-                          <!--<th>Delete</th>-->
+                          <th>Edit</th>
+                          <th>Delete</th>
                         </tr>
                       </thead>
 
@@ -78,7 +97,7 @@
 
                       @foreach ($beverages as $val)
                         <tr>
-                          <td><img src="../img/hot-latte.png" alt="Sample Image"></td>
+                          <td><img src="{{url('../images/'.$val->image)}}" alt="Image"></td>
                           <td> 
                               {{$val->title}}
                           </td>
@@ -101,6 +120,17 @@
                               echo "No";
                               }
                             @endphp
+                          </td>
+                          <td>
+                          <a href="{{route('editBeverage.html', [$val->id])}}"><img src="{{asset('./images/edit.png')}}" alt="Edit"></a>
+                          </td>
+                          <td>
+                            <form action="{{route('beverages-delete', [$val->id])}}" method="post">
+                                  @csrf
+                                  @method('DELETE')
+                                  <input type="hidden" name="id" value="{{$val->id}}">
+                                  <input type="submit" value="Delete">
+                            </form>
                           </td>
                         <tr>
                       @endforeach

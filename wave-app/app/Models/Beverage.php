@@ -11,6 +11,8 @@ class Beverage extends Model
     use HasFactory;
 
     protected $table = "beverages";
+    protected $fillable = ['title', 'content', 'price', 'published',
+    'special', 'item_category', 'image'];
     protected $casts = [
         'published' => 'boolean',
         'special' => 'boolean'

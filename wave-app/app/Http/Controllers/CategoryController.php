@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Beverage;
 use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+//use App\Http\Controllers\Input;
+//use Illuminate\Support\Facades\Input;
 
 class CategoryController extends Controller
 {
@@ -32,9 +35,33 @@ class CategoryController extends Controller
     }
     //delete Category operation
     public function destroy(Request $request):RedirectResponse{
+        $cat_bev = Beverage::where('item_category', $request->input('category'))->count();
         $id=$request->id;
-        Category::where('id', $id)->delete();
-        return redirect()->route('categories.html')->with('deleted_success', 'Category Deleted Successfully');
+        //find count of beverages in this category
+        //$cat_bev = Category::find($category)->beverages;
+        if($cat_bev == 0){ //has no data
+            Category::where('id', $id)->delete();
+            return redirect()->route('categories.html')->with('deleted_success', 'Category Deleted Successfully');
+        }
+        else{
+            return redirect()->route('categories.html')->with('deleted_error', 'Category Contains Data, Delete Failed');
+        }
+    }
+    //show all beverages of this category////ERROR
+    public function cat_beverages(){
+        $name = "Hot Drinks";
+        $category = Category::where('category', $name)->first();
+        if ($category) {
+            $beverages = $category->beverages;
+            foreach($beverages as $row){
+                echo $row->title . ":" . $row->item_category;
+                echo "<br>";
+            }
+        }
+        //$beverages = $category->beverages;
+        else{
+            echo "Not found";
+        }
     }
     //edit Category operation p1
     public function edit(string $id){

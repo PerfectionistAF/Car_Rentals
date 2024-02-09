@@ -249,6 +249,7 @@ https://www.tooplate.com/view/2121-wave-cafe
           <!-- end Special Items Page -->
 
           <!-- Contact Page -->
+          <!-- MessageController -->
           <div id="contact" class="tm-page-content">
             <div class="tm-black-bg tm-contact-text-container">
               <h2 class="tm-text-primary">Contact Wave</h2>

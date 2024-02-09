@@ -79,6 +79,8 @@ Route::prefix('CATEGORIES')->group(function(){
 
     Route::get('/categories-editview/{id}', [CategoryController::class, 'edit'])->name('editCategory.html')->middleware(['auth', 'admin']);
     Route::post('/categories-editsave/{id}', [CategoryController::class, 'update'])->name('saveEditCategory');
+    //test 1:m delete constraints////NOT DONE
+    Route::get('/cat_beverages', [CategoryController::class , 'cat_beverages'])->name('cat_beverages');
 });
 
 
@@ -89,6 +91,10 @@ Route::prefix('BEVERAGES')->group(function(){
     Route::get('/beverages-addview', [BeverageController::class, 'create'])->name('addBeverage.html')->middleware(['auth', 'admin']);
     Route::post('/beverages-addsave', [BeverageController::class, 'store'])->name('saveNewBeverage');
 
+    Route::delete('/beverages-delete/{id}', [BeverageController::class , 'destroy'])->name('beverages-delete')->middleware(['auth', 'admin']);
+    
+    Route::get('/beverages-editview/{id}', [BeverageController::class, 'edit'])->name('editBeverage.html')->middleware(['auth', 'admin']);
+    Route::post('/beverages-editsave/{id}', [BeverageController::class, 'update'])->name('saveEditBeverage');
 });
 
 

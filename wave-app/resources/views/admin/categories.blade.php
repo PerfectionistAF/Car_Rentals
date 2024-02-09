@@ -55,6 +55,13 @@
                       Session::forget('deleted_success')
                       @endphp</div>
                   @endif
+                  @if(Session::has('deleted_error'))
+                  <div class="alert alert-danger">
+                      {{Session::get('deleted_error')}}
+                      @php
+                      Session::forget('deleted_error')
+                      @endphp</div>
+                  @endif
                     <h2>List of Categories</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
