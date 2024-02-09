@@ -55,7 +55,7 @@
                         <tr>
                           <th>Full Name</th>
                           <th>Email</th>
-                          <!--<th>Show</th>-->
+                          <th>Show</th>
                           <th>Delete</th>
                         </tr>
                       </thead>
@@ -68,7 +68,7 @@
                           <td> 
                               {{$val->email}}
                           </td>
-                          <!--<td><img src="./images/edit.png" alt="Edit"></td>-->
+                          <td><a href="/MESSAGES/messages-show/{{$val->id}}" style="color:blue">Show</a></td>
                           <td>
                             <form action="{{route('messages-delete', [$val->id])}}" method="post">
                                   @csrf

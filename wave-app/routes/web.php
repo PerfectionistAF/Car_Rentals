@@ -104,9 +104,14 @@ Route::prefix('BEVERAGES')->group(function(){
 Route::prefix('MESSAGES')->group(function(){
     Route::get('/messages-admin', [MessageController::class , 'index'])->name('messages.html')->middleware(['auth', 'admin']);
 
-    Route::delete('/messages-delete/{id}', [MessageController::class , 'destroy'])->name('messages-delete')->middleware(['auth', 'admin']); 
+    Route::delete('/messages-delete/{id}', [MessageController::class , 'destroy'])->name('messages-delete')->middleware(['auth', 'admin']);
+    
+    Route::get('/messages-show/{id}', [MessageController::class , 'show'])->name('messages-show'); 
 });
 
 //MAIN PAGE VIEWS AND ROUTES
-Route::get('/mainpage-contactus', [MessageController::class, 'create'])->name('contactus');
+Route::get('/mainpage-special', [MessageController::class, 'create'])->name('contactus');
 Route::post('/mainpage-addsave', [MessageController::class, 'store'])->name('sendmessage');
+
+Route::get('/mainpage-special', [BeverageController::class, 'special'])->name('specialmenu');
+//Route::get('/mainpage-special', [CategoryController::class, 'tail'])->name('menucategories'); //ERROR

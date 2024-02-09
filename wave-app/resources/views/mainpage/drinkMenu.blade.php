@@ -1,6 +1,8 @@
-@extends('index')
+@extends('mainpage.index')
 
 @section('content')
+<div class="tm-right">
+<main class="tm-main">
 <div id="drink" class="tm-page-content">
             <!-- Drink Menu Page -->
             <nav class="tm-black-bg tm-drinks-nav">
@@ -120,4 +122,6 @@
             </div>
             <!-- end Drink Menu Page -->
           </div>
+</main>
+</div>
 @endsection

@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    //last 3 categories
+    public function tail(){
+        $tail = Category::latest()->take(3);
+        //return view('mainpage.index', compact('tail'));
+        return view("mainpage.index", ["tail" => $tail]);//pass to another session
+    }
     //all categories
     public function index(){
         $categories = Category::all();

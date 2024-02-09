@@ -18,14 +18,14 @@ class MessageController extends Controller
         return view("mainpage.index");
     }
     //store message
-    public function store(Request $request):RedirectResponse{
+    public function store(Request $request){
         $messages = new Message();
         $messages->name = $request->name;
         $messages->email = $request->email;
         $messages->message = $request->message;
         $messages->save();
 
-        return redirect()->route('contactus')->with('sent', 'Message Sent Successfully');
+        return redirect()->back();
     }
     //delete message
     public function destroy(Request $request):RedirectResponse{
@@ -33,6 +33,9 @@ class MessageController extends Controller
         Message::where('id', $id)->delete();
         return redirect()->route('messages.html')->with('deleted_success', 'Message Deleted Successfully');
     }
-
     //show message details
+    public function show(string $id){
+        $message = Message::findOrFail($id);
+        return view('admin.showMessage', compact('message'));
+    }
 }

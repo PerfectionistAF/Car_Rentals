@@ -62,6 +62,7 @@ https://www.tooplate.com/view/2121-wave-cafe
           <div id="drink" class="tm-page-content">
             <!-- Drink Menu Page -->
             <nav class="tm-black-bg tm-drinks-nav">
+              <!---FOR EACH BLOCK FOR LAST THREE CATEGORIES AND THEIR BEVERAGES--->
               <ul>
                 <li>
                   <a href="{{asset('#')}}" class="tm-tab-link active" data-id="cold">Iced Coffee</a>
@@ -209,16 +210,22 @@ https://www.tooplate.com/view/2121-wave-cafe
           <div id="special" class="tm-page-content">
             <div class="tm-special-items">
               @php
-
+              foreach($beverages as $val){
+                if($val->published){
+                  if($val->special){
               @endphp
               <div class="tm-black-bg tm-special-item">
-                <img src="{{asset('img/special-01.jpg')}}" alt="Image">
+                <img src="{{url('../images/'.$val->image)}}" alt="Image">
                 <div class="tm-special-item-description">
-                  <h2 class="tm-text-primary tm-special-item-title">Special One</h2>
-                  <p class="tm-special-item-text">Here is a short text description for the first special item. You are not allowed to redistribute this template ZIP file.</p>  
+                  <h2 class="tm-text-primary tm-special-item-title">{{$val->title}}</h2>
+                  <p class="tm-special-item-text">{{$val->content}}</p>  
                 </div>
               </div>
-              
+              @php
+                  }
+                }
+              }
+              @endphp
             </div>            
           </div>
           <!-- end Special Items Page -->
