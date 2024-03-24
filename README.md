@@ -1,5 +1,4 @@
 # Laravel Wave Cafe Project:README
-## ______________________________________
 ## 1) AUTHENTICATON MODULE:
 
 -Registration-----------------------------------------------------------------DONE
@@ -36,7 +35,6 @@ AND SUBSTITUTE VIEWS IN VIEWS/AUTH WITH YOUR REQUIRED REGISTER AND LOGIN VIEWS
 
 DON'T TRY IT FROM SCRATCH
 ### ****
-## ______________________________________
 ## 2) USERS MODULE:
 
 -View users-------------------------------------------------------------------DONE
@@ -56,7 +54,6 @@ ACTIVE CHECKBOX REMOVED FROM USER FORMS
 FRONTEND VALIDATION REMOVED
 
 IMPROVEMENT: CONTROLLER AND FIELD VALIDATION TO NEW USERS
-## ______________________________________
 ## 3) CATEGORIES MODULE:
 
 -View categories--------------------------------------------------------------DONE
@@ -78,7 +75,6 @@ FRONTEND VALIDATION REMOVED
 IMPROVEMENT: CONTROLLER AND FIELD VALIDATION + DUPLICATE ERROR VALIDATION
 
 ADD CATEGORY_ID COLUMN AS FOREIGN KEY TO BE ABLE TO RETREIVE IT FOR BETTER DELETION
-## ______________________________________
 ## 4) BEVERAGES MODULE:
 ### **special or not?
 ### **published or not?
@@ -107,7 +103,6 @@ USE RESOURCE CONTROLLERS, SO YOU CAN MANIPULATE HTTP REQUESTS EASILY WITH CRUD
 
 THIS IS IMPORTANT FOR IMAGE UPLOAD 
 ### ****
-## ______________________________________
 ## 5) MESSAGES MODULE:
 
 -View messages----------------------------------------------------------------DONE
@@ -119,7 +114,6 @@ THIS IS IMPORTANT FOR IMAGE UPLOAD
 -Count of unread messages-----------------------------------------------------NOT DONE
 
 -Email me when a new message is submitted-------------------------------------IMPROVEMENT
-## ______________________________________
 ## 6) MAINPAGE DISPLAY:
 
 -View last 3 categories-------------------------------------------------------NOT WORKING
@@ -139,4 +133,3 @@ SO EITHER THE ITEMS ARE DISPLAYED OR THE CONTACT FORM IS FILLED
 
 DIVIDE INTO MULTIPLE VIEWS--INCOMPLETE IN THIS PROJECT
 ### ****
-## ______________________________________
