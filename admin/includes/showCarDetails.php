@@ -19,7 +19,7 @@ if($status){
 		else{
 			$activeBox = "";
 		}
-        $categorytype = $row["categorytype"];
+        /*$categorytype = $row["categorytype"];
         if($categorytype){
 			$sedanStr = "";
 			$crossoverStr = "selected";
@@ -27,7 +27,8 @@ if($status){
 		else{
 			$crossoverStr = "";
 			$sedanStr = "selected";
-		}
+		}*/
+		$cat_name = $row["cat_name"];
         $image = $row["image"];
 	}catch(PDOException $e){
 		echo "Connection failed: " . $e->getMessage();

@@ -19,7 +19,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 		  else{
 			  $active = 0;
 		  }
-		$categorytype = $_POST["categorytype"];
+		#$categorytype = $_POST["cat_name"];
+		$cat_id = $_POST["cat_id"];
 		include_once("includes/addimage.php");
 	#}
 
@@ -343,8 +344,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 											<div class="col-md-6 col-sm-6 ">
 												<select class="form-control" name="categorytype" id="">
 													<option value=" ">Select Category</option>
-													<option value="0">sedan</option>
-													<option value="1">crossover</option>
+													<?php
+													    $categories = $conn->query("SELECT * FROM categories_table");
+														while ($category = $categories->fetch(PDO::FETCH_ASSOC)) {
+															echo "<option value='" . $category['id'] . "'>" . $category['categoryname'] . "</option>";
+														}
+													?>
+													<!--<option value="0">sedan</option>
+													<option value="1">crossover</option>-->
 												</select>
 											</div>
 										</div>

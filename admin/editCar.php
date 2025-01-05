@@ -25,16 +25,17 @@ $again = false;
 		  else{
 			  $active = 0;
 		  }
-		$categorytype = $_POST["categorytype"];
-
+		#$categorytype = $_POST["categorytype"];
+		$cat_id = $_POST["cat_id"];
+		$cat_name = $_POST["cat_name"];
 		$oldImage = $_POST["oldImage"];
 		
 		include_once("includes/updateImage.php");
 
 			try{
-				$sql = "UPDATE `cars_table` SET `title`=?, `image=?`, `content`=?, `luggage`=?, `doors`=?, `passengers`=?, `price`=?, `image`=?, `active`=?, `categorytype`=? WHERE id = ?";
+				$sql = "UPDATE `cars_table` SET `title`=?, `image=?`, `content`=?, `luggage`=?, `doors`=?, `passengers`=?, `price`=?, `image`=?, `active`=?, `cat_id=?`, `cat_name`=? WHERE id = ?";
 				$stmt = $conn->prepare($sql);
-				$stmt->execute([$title, $content, $luggage, $doors, $passengers, $price, $active, $categorytype, $image_name, $id]);
+				$stmt->execute([$title, $content, $luggage, $doors, $passengers, $price, $active, $image_name, $cat_id, $cat_name, $id]);
 				#echo "CAR UPDATED SUCCESSFULLY";
 				header("Location:cars.php");
 				die();
@@ -353,10 +354,17 @@ $again = false;
 											<label class="col-form-label col-md-3 col-sm-3 label-align" for="title">Category <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<select class="form-control" name="categorytype" id="">
-													<option value=" ">Select Category</option>
-													<option value="0" <?php echo $sedanStr ?>>sedan</option>
-													<option value="1" <?php echo $crossoverStr ?>>crossover</option>
+												<select class="form-control" name="cat_name" id="">
+													<option value=" "><?php echo $cat_name?></option>
+													<?php
+													    $categories = $conn->query("SELECT * FROM categories_table");
+														while (($category <> $cat_name) AND ($category = $categories->fetch(PDO::FETCH_ASSOC))) {
+															echo "<option value='" . $category['id'] . "'>" . $category['categoryname'] . "</option>";
+														}
+													?>
+
+													<!--<option value="0" <?php #echo $sedanStr ?>>sedan</option>
+													<option value="1" <?php #echo $crossoverStr ?>>crossover</option>-->
 												</select>
 											</div>
 										</div>

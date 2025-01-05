@@ -2,7 +2,7 @@
 include_once("includes/logged.php");
 include_once("includes/conn.php"); #connect
 
-$request = false;
+$request = true;
 if($_SERVER["REQUEST_METHOD"]=="POST"){
 	$request = true; 
 	$fullname = $_POST["fullname"];

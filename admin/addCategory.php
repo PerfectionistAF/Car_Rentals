@@ -1,7 +1,7 @@
 <?php
 include_once("includes/logged.php");
 include_once("includes/conn.php"); #connect
-$request = false;
+$request = true;#false;
 if($_SERVER["REQUEST_METHOD"]=="POST"){
 	$request = true;  
 	$categoryname = $_POST["categoryname"];

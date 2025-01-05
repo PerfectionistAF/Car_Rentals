@@ -14,9 +14,9 @@ $status = false;
 		$categoryname = $_POST["categoryname"];
 		
 			try{
-				$sql = "UPDATE `categories_table` SET `categoryname`=?";
+				$sql = "UPDATE `categories_table` SET `categoryname`= ? WHERE `id` = ?";
 				$stmt = $conn->prepare($sql);
-				$stmt->execute([$categoryname]);
+				$stmt->execute([$categoryname, $id]);
 				#echo "CATEGORY UPDATED SUCCESSFULLY";
 				header("Location:cars.php");
 				die();
