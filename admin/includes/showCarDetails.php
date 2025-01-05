@@ -20,7 +20,7 @@ if($status){
 			$manualStr = "selected";
 		}
 		$properties = $result["properties"];
-		$catid = $result["cat_id"];
+		#$catid = $result["cat_id"];
 		$price = $result["price"];
 		$published = $result["published"];
 		if($published){
@@ -38,6 +38,7 @@ if($status){
 		$sql = "SELECT * FROM `categories`";
 		$stmt2 = $conn->prepare($sql);
 		$stmt2->execute();
+		#$catid = $result["cat_id"];
 	}catch(PDOException $e){
 		echo "FAILED TO UPDATE CAR" . $e->getMessage();
 	}

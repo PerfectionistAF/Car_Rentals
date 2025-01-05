@@ -28,9 +28,9 @@
 			include_once("includes/updateImage.php");
 			try{
 				#$sql = "SELECT * FROM `cars` WHERE id = ?";
-				$sql = "UPDATE `cars` SET `title`=?, `description`=?, `model`=?, `auto`=?, `properties`=?, `price`=?, `image`=?, `published`=?, `cat_id`=? WHERE id = ?";
+				$sql = "UPDATE `cars` SET `title`=?, `description`=?, `model`=?, `auto`=?, `properties`=?, `price`=?, `image`=?, `published`=? WHERE id = ?";
 				$stmt = $conn->prepare($sql);
-				$stmt->execute([$title,$content,$model,$auto,$properties,$price,$image_name,$published,$category, $id]);
+				$stmt->execute([$title,$content,$model,$auto,$properties,$price,$image_name,$published,$id]);
 				#echo "CAR UPDATED SUCCESSFULLY";
 				/*$title = $result["title"];
 				$image = $result["image"];
